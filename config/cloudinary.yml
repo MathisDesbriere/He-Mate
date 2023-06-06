@@ -1,0 +1,9 @@
+production:
+  cloud_name: 'dx1ux53ak'
+  api_key: '835159333336459'
+  api_secret: 'vZ3Ov6Sgy1YkI9HTrEDg1idgI30'
+
+development:
+  cloud_name: 'dx1ux53ak'
+  api_key: '835159333336459'
+  api_secret: 'vZ3Ov6Sgy1YkI9HTrEDg1idgI30'
