@@ -1,6 +1,11 @@
 class MarkersController < ApplicationController
   before_action :set_marker, only: [:destroy]
 
+  def index
+    @markers = Marker.all
+    @markers = policy_scope(Marker)
+  end
+
   def new
     @activity = Activity.find(params[:activity_id])
     @marker = Marker.new

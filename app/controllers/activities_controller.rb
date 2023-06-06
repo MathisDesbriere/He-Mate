@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @activitys = Activity.all
-    @activitys = policy_scope(activity)
+    @activitys = policy_scope(Activity)
   end
 
   def show
@@ -21,6 +21,15 @@ class ActivitiesController < ApplicationController
     @activity.image.attach(params[:activity][:image])
     @activity.user = current_user
     authorize @activity #line must be at the end of the method WARNING
+  end
+
+  def destroy
+    if @activity.destroy
+      redirect_to activities_path, status: :see_other
+    else
+      render :new, status: :unprocessable_entity
+    end
+    authorize @activity
   end
 
   private
