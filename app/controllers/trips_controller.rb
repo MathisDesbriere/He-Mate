@@ -21,15 +21,15 @@ class TripsController < ApplicationController
 
   def create
     @trip = Trip.new(trip_params)
-    @trip.image.attach(params[:trip][:image])
+    @trip.images.attach(params[:trip][:images])
     @trip.user = current_user
     authorize @trip #line must be at the end of the method WARNING
 
     if @trip.save
-      # 图像上传成功
+      # Success
       puts "Image attached successfully!"
     else
-      # 图像上传失败
+      # Fail
       puts "Failed to attach image!"
     end
   end
@@ -56,7 +56,7 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:name, :address, :description, :wifi, :TV, :parking, :air_conditioner, :image)
+    params.require(:trip).permit(:name, :address, :description, :wifi, :TV, :parking, :air_conditioner, images: [])
   end
 
   def set_trip

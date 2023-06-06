@@ -7,6 +7,10 @@ local:
   cloud_name: 'dx1ux53ak'
   api_key: '835159333336459'
   api_secret: 'vZ3Ov6Sgy1YkI9HTrEDg1idgI30'
+
+cloudinary:
+  service: Cloudinary
+  folder: <%= Rails.env %>
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
