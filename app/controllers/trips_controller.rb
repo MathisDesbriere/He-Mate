@@ -22,7 +22,6 @@ class TripsController < ApplicationController
   end
 
   def new
-    @activity = Activity.find(params[:activity_id])
     @trip = Trip.new
     authorize @trip #line must be at the end of the method WARNING
   end
