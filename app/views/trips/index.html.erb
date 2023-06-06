@@ -1,5 +1,25 @@
 <h1>Trip Index !</h1>
-<%= @trips.each do |trip| %>
-  <%= image_tag flat.image, class: "img" if flat.image.attached? %>
-  <b><%= link_to trip.title, flat_path(trip) %> :</b> <i><u><%= user.first_name %></i></u>; <%= trip.description %>
+
+<% @trips.each do |trip| %>
+  <div class="card-trip">
+    <div class= "title">
+      <p>User: <%= trip.user.last_name %></p>
+    </div>
+
+    <img src="<%= asset_path('seedTrip.jpeg') %>" />
+    <div class="card-trip-infos">
+      <div class="card-trip-details">
+        <h2><%= trip.title %></h2>
+        <p>Description : <%= trip.description %></p>
+      </div>
+
+      <div class="card-trip-user">
+
+        <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
+
+        <h2> <i class="fa-solid fa-heart"></i>  <%= trip.like %></h2>
+
+      </div>
+    </div>
+  </div>
 <% end %>
