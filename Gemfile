@@ -27,7 +27,7 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'carrierwave'
+gem 'carrierwave', '~> 2.2.3'
 gem 'cloudinary'
 
 # Use Redis adapter to run Action Cable in production
@@ -52,6 +52,7 @@ gem "devise"
 gem "pundit"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+gem "dotenv-rails", groups: [:development, :test]
 
 gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"

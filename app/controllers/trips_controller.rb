@@ -2,6 +2,7 @@ class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :index]
 
+
   def index
     @trips = Trip.all
     @trips = policy_scope(Trip)
@@ -23,6 +24,14 @@ class TripsController < ApplicationController
     @trip.image.attach(params[:trip][:image])
     @trip.user = current_user
     authorize @trip #line must be at the end of the method WARNING
+
+    if @trip.save
+      # 图像上传成功
+      puts "Image attached successfully!"
+    else
+      # 图像上传失败
+      puts "Failed to attach image!"
+    end
   end
 
   def edit

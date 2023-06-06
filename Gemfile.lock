@@ -293,7 +293,7 @@ DEPENDENCIES
   autoprefixer-rails
   bootsnap
   capybara
-  carrierwave
+  carrierwave (~> 2.2.3)
   cloudinary
   debug
   devise

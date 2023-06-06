@@ -34,7 +34,8 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
+
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -43,6 +44,8 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+
+  config.active_storage.service = :cloudinary
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
@@ -62,15 +65,7 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
-  config.gem 'carrierwave', :version => '~> 0.4.10'
-config.gem 'cloudinary'
 
-  Cloudinary.config do |config|
-    config.cloud_name = 'dx1ux53ak'
-    config.api_key = '835159333336459'
-    config.api_secret = 'vZ3Ov6Sgy1YkI9HTrEDg1idgI30'
-    config.secure = true
-  end
 
 
   # Annotate rendered view with file names.
