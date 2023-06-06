@@ -34,7 +34,8 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
+
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -43,6 +44,8 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+
+  config.active_storage.service = :cloudinary
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
@@ -61,6 +64,9 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
+
+
+
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
