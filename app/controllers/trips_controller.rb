@@ -10,7 +10,15 @@ class TripsController < ApplicationController
 
 
   def show
+    @trip = Trip.find(params[:id])
     authorize @trip
+
+    # @trip = Trip.set_trip
+    # if @trip.user == current_user
+    #   @my_booking = @booking
+    # elsif @booking.flat.user == current_user
+    #   @my_rental = @booking
+    # end
   end
 
   def new
