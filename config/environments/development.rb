@@ -61,6 +61,12 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
+  Cloudinary.config do |config|
+    config.cloud_name = 'dx1ux53ak'
+    config.api_key = '835159333336459'
+    config.api_secret = 'vZ3Ov6Sgy1YkI9HTrEDg1idgI30'
+    config.secure = true
+  end
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
