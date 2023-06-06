@@ -1,1 +1,5 @@
-<h1>Hola !</h1>
+<h1>Trip Index !</h1>
+<%= @trips.each do |trip| %>
+  <%= image_tag flat.image, class: "img" if flat.image.attached? %>
+  <b><%= link_to trip.title, flat_path(trip) %> :</b> <i><u><%= user.first_name %></i></u>; <%= trip.description %>
+<% end %>
