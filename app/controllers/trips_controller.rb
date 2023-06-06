@@ -1,7 +1,6 @@
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!, only: [:show, :index]
-
+  skip_before_action :authenticate_user!, only: [:show, :index, :new]
 
   def index
     @trips = Trip.all
@@ -12,32 +11,23 @@ class TripsController < ApplicationController
   def show
     @trip = Trip.find(params[:id])
     authorize @trip
-
-    # @trip = Trip.set_trip
-    # if @trip.user == current_user
-    #   @my_booking = @booking
-    # elsif @booking.flat.user == current_user
-    #   @my_rental = @booking
-    # end
   end
 
   def new
     @trip = Trip.new
-    authorize @trip #line must be at the end of the method WARNING
+    authorize @trip
   end
 
   def create
     @trip = Trip.new(trip_params)
     @trip.images.attach(params[:trip][:images])
     @trip.user = current_user
-    authorize @trip #line must be at the end of the method WARNING
+    authorize @trip
 
     if @trip.save
-      # Success
-      puts "Image attached successfully!"
+      redirect_to @trip, notice: "Trip was successfully created."
     else
-      # Fail
-      puts "Failed to attach image!"
+      render :new
     end
   end
 
@@ -63,7 +53,7 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:name, :address, :description, :wifi, :TV, :parking, :air_conditioner, images: [])
+    params.require(:trip).permit(:title, :user, :like, :description, images: [])
   end
 
   def set_trip

@@ -1,7 +1,25 @@
 <h1>This is </h1>
-<div class="trip_detail_card">
-<%= @trip.title %>
+<div class="card-trip">
+<div class="title">
+      <p>User: <%= @trip.user.last_name %></p>
+</div>
+
+<% @trip.images.each do |image| %>
+  <%= cl_image_tag image.key, height: 300, width: 400, crop: :fill %>
+<% end %>
+<div class="card-trip-infos">
+      <div class="card-trip-details">
+
+<h2><%= @trip.title %></h2>
 
 <%= @trip.like %>
-<%= @trip.description %>
+<p>Description :
+<%= @trip.description %></p>
+ <div class="card-trip-user">
+ <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
+
+        <h2> <i class="fa-solid fa-heart"></i></h2>
+</div>
+
+
 </div>
