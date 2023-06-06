@@ -1,3 +1,9 @@
+h1 {
+  text-align: left;
+  text-indent: 20px;
+  font-weight: bold;
+  padding-top: 5%;
+}
 .card-trip {
   overflow: hidden;
   background: white;
@@ -11,7 +17,11 @@
   border-radius: 15px;
 }
 
-.card-trip .title {
+.card-trip:first-of-type {
+  margin-top: 60px;
+}
+
+.card-trip-title {
   text-align: left;
   text-indent: 20px;
   font-weight: bold;
@@ -64,4 +74,10 @@
 .card-trip-details {
   max-width: 160px;
   line-height: 1rem;
+}
+
+.card-trip-like {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
