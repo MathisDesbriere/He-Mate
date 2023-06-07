@@ -10,6 +10,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
+    @user = current_user if user_signed_in?
     authorize @trip
   end
 
@@ -21,6 +22,7 @@ class TripsController < ApplicationController
 
   def create
     @trip = Trip.new(trip_params)
+    @user = current_user if user_signed_in?
     @trip.images.attach(params[:trip][:images])
     @trip.user = current_user
     authorize @trip

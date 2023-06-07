@@ -11,7 +11,12 @@
         <p>Description : <%= trip.description %></p>
       </div>
         <div class="card-trip-user">
+          <% if trip.user.image.present? %>
+            <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
+          <% else %>
           <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
+          <% end %>
+
         </div>
         <div class= "card-trip-like">
           <h2> <%= trip.like %> <i class="fa-solid fa-heart"></i> </h2>

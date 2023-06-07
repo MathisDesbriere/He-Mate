@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   validates :image, presence: true
 
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end
