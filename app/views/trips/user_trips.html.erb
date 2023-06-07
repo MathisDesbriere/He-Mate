@@ -1,0 +1,38 @@
+<% if @user == current_user %>
+  <div class="user-profile-navbar">
+    <div class="nav-item">
+      <div class="nav-content">
+        <h2><%= link_to 'Your Trips', user_trips_path(current_user) %></h2>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <div class="nav-content">
+        <h2><%= link_to 'My profile', user_path(current_user) %></h2>
+      </div>
+    </div>
+  </div>
+
+  <% @trips.each do |trip| %>
+    <div class="card-trip" id="trips-index">
+      <% trip.images.each do |image| %>
+        <%= cl_image_tag image.key, height: 300, width: 400, crop: :fill %>
+      <% end %>
+
+      <div class="card-trip-infos">
+        <div class="card-trip-details">
+          <h2><%= trip.title %></h2>
+          <%= trip.like %>
+          <p>Description: <%= trip.description %></p>
+          <div class="card-trip-user">
+            <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
+            <h2><i class="fa-solid fa-heart"></i></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<% else %>
+  <h1>You are not authorized.</h1>
+<% end %>
