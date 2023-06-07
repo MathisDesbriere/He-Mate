@@ -4,6 +4,7 @@ class TripsController < ApplicationController
 
   def index
     @trips = Trip.all
+    @user = current_user if user_signed_in?
     @trips = policy_scope(Trip)
   end
 
