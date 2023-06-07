@@ -13,23 +13,11 @@
 }
 
 
-@media (max-width: 576px) {
+
   .navbar-logo {
     width: 200px;
     height: auto;
   }
-}
 
-@media (min-width: 577px) and (max-width: 991px) {
-  .navbar-logo {
-    width: 250px;
-    height: auto;
-  }
-}
 
-@media (min-width: 992px) {
-  .navbar-logo {
-    width: 300px;
-    height: auto;
-  }
-}
+

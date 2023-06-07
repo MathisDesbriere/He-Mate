@@ -20,10 +20,18 @@
 }
 
 .navbar-link i {
-  font-size: 35px; /* Taille par défaut pour les mobiles */
+  font-size: 35px;
 
   @media screen and (min-width: 768px) {
-    font-size: 40px; /* Taille plus grande pour les écrans de bureau */
+    font-size: 40px;
+  }
+}
+
+.circle-plus-link i {
+  font-size: 45px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 50px;
   }
 }
 
