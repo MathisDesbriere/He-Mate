@@ -9,23 +9,15 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999; /* Vous pouvez ajuster cette valeur si nécessaire */
+  z-index: 9999; 
 }
 
 
-
-  .navbar-logo {
-    width: 200px;
-    height: auto;
-  }
-
-
-@media (min-width: 992px) {
-  .navbar-logo {
-    width: 300px;
-    height: auto;
-  }
+.navbar-logo {
+  width: 200px;
+  height: auto;
 }
+
 
 @media (min-width: 992px) {
   .user-profile-navbar {

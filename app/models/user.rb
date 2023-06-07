@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_one_attached :image
   has_many :trips
   validates :image, presence: true
+
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 end
