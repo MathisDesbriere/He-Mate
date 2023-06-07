@@ -11,6 +11,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
+    @user = current_user if user_signed_in?
     authorize @trip
   end
 
