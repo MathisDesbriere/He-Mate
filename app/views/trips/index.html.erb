@@ -4,10 +4,13 @@
       <p>User: <%= trip.user.last_name %></p>
     </div>
 
-    <img src="<%= asset_path('seedTrip.jpeg') %>" />
+    <%= link_to trip_path(trip) do %>
+      <img class="test" src="<%= asset_path('seedTrip.jpeg') %>" />
+    <% end %>
+
     <div class="card-trip-infos">
       <div class="card-trip-details">
-        <h2><%= trip.title %></h2>
+        <h2><%= trip.title.capitalize %></h2>
         <p>Description : <%= trip.description %></p>
       </div>
         <div class="card-trip-user">
@@ -23,6 +26,5 @@
         </div>
       </div>
     </div>
-  </div>
-
+ </div>
 <% end %>
