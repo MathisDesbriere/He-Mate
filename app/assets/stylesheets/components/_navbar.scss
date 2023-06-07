@@ -20,4 +20,60 @@
   }
 
 
+@media (min-width: 992px) {
+  .navbar-logo {
+    width: 300px;
+    height: auto;
+  }
+}
 
+@media (min-width: 992px) {
+  .user-profile-navbar {
+    display: flex;
+    margin-top: 111px;
+    width: 390px;
+    height: 65;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-content {
+    text-align: center;
+  }
+
+  .nav-item:hover {
+    background-color: #0B8D93;
+  }
+}
+
+
+.user-profile-navbar {
+  display: flex;
+  margin-top: 85px;
+  width: 390px;
+  height: 65;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-content {
+  text-align: center;
+}
+
+.nav-item:hover {
+  background-color: #0B8D93;
+}
