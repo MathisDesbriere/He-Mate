@@ -7,9 +7,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   get '/users/:id', to: 'users#show', as: 'user'
   get '/users/:id/edit', to: 'users#edit'
-
-
-
+  get 'users/:id/trips', to: 'trips#user_trips', as: 'user_trips'
 
   resources :trips do
     resources :markers, only: [:new, :create]
