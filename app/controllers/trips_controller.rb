@@ -7,6 +7,17 @@ class TripsController < ApplicationController
     @trips = policy_scope(Trip)
   end
 
+  def user_trips
+    @user = User.find(params[:id])
+
+    if user_signed_in?
+      @user = current_user
+      @trips = @user.trips
+      authorize @trips
+    else
+      redirect_to new_user_session_path, notice: "Please sign in to view your trips."
+    end
+  end
 
   def show
     @trip = Trip.find(params[:id])
@@ -16,7 +27,7 @@ class TripsController < ApplicationController
 
   def new
     @trip = Trip.new
-    @user = current_user if user_signed_in?
+    @marker = Marker.new
     authorize @trip
   end
 
@@ -26,8 +37,9 @@ class TripsController < ApplicationController
     @trip.images.attach(params[:trip][:images])
     @trip.user = current_user
     authorize @trip
-
     if @trip.save
+      @marker = Marker.new(address: params[:other][:address], trip: @trip)
+      @marker.save!
       redirect_to @trip, notice: "Trip was successfully created."
     else
       render :new
@@ -35,16 +47,20 @@ class TripsController < ApplicationController
   end
 
   def edit
+    @user = current_user if user_signed_in?
     authorize @trip #line must be at the end of the method WARNING
   end
 
   def update
+    @user = current_user if user_signed_in?
     @trip.update(trip_params)
     redirect_to trip_path(@trip)
     authorize @trip #line must be at the end of the method WARNING
   end
 
   def destroy
+    @user = current_user if user_signed_in?
+
     if @trip.destroy
       redirect_to trips_path, status: :see_other
     else
