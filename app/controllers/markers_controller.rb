@@ -11,7 +11,6 @@ class MarkersController < ApplicationController
         lng: marker.longitude
       }
     end
-
   end
 
   def new
