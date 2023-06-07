@@ -15,6 +15,7 @@ class TripsController < ApplicationController
 
   def new
     @trip = Trip.new
+    @marker = Marker.new
     authorize @trip
   end
 
@@ -23,8 +24,9 @@ class TripsController < ApplicationController
     @trip.images.attach(params[:trip][:images])
     @trip.user = current_user
     authorize @trip
-
     if @trip.save
+      @marker = Marker.new(address: params[:other][:address], trip: @trip)
+      @marker.save!
       redirect_to @trip, notice: "Trip was successfully created."
     else
       render :new
