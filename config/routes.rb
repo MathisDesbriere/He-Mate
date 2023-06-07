@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  get '/users/:id', to: 'users#show', as: 'user'
+  get '/users/:id/edit', to: 'users#edit'
+
+
 
 
   resources :trips do
@@ -13,6 +17,5 @@ Rails.application.routes.draw do
   end
 
   resources :activities, only: [:index, :show, :update]
-
   resources :markers, only: [:index, :show, :destroy, :create, :new]
 end
