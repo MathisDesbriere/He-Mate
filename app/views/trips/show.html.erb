@@ -25,13 +25,17 @@
         </div>
       </div>
     </div>
+
     <div class="carousel-item">
       <div class="show-card-trip">
-      <%= cl_image_tag image.key, height: 300, width: 400, crop: :fill %>      </div>
+        <img src="<%= asset_path('seedTrip.jpeg') %>" />
+      </div>
     </div>
+
     <div class="carousel-item">
       <div class="show-card-trip">
-      <%= cl_image_tag image.key, height: 300, width: 400, crop: :fill %>      </div>
+        <img src="<%= asset_path('seedTrip.jpeg') %>" />
+      </div>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
