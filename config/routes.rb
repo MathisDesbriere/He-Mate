@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     resources :markers, only: [:new, :create]
     resources :activities, only: [:new, :create]
     resources :comments, only: [:create, :destroy]
+    member do
+      post 'like'
+      get 'like'
+    end
   end
 
   resources :activities, only: [:index, :show, :update]
