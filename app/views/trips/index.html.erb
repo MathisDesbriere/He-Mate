@@ -10,19 +10,30 @@
         <h2><%= trip.title %></h2>
         <p>Description : <%= trip.description %></p>
       </div>
-        <div class="card-trip-user">
-          <% if trip.user.image.present? %>
-            <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
-          <% else %>
+      <div class="card-trip-user">
+        <% if trip.user.image.present? %>
+          <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
+        <% else %>
           <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
-          <% end %>
-
-        </div>
-        <div class= "card-trip-like">
-          <h2> <%= trip.like %> <i class="fa-solid fa-heart"></i> </h2>
-        </div>
+        <% end %>
+      </div>
+      <div class= "card-trip-like">
+        <h2><%= trip.like %> <i class="fa-solid fa-heart"></i></h2>
+      </div>
+       <div class="card-trip-comments">
+      <%= render partial: 'comments/comment', collection: trip.comments %>
+    </div>
+      <div class="comment-bx">
+        <%= form_for Comment.new do |f| %>
+          <%= f.hidden_field :trip_id, value: trip.id %>
+          <div class="input-group">
+          <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
+          <div class="input-group-append">
+          <%= f.submit "Post", class: "btn-post float-right" %>
+          </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
-
 <% end %>
