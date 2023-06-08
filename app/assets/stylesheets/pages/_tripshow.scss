@@ -18,8 +18,8 @@ h1 {
   border-radius: 15px;
 }
 
-.show-card-trip:first-of-type {
-  margin-top: 60px;
+#trips-index:first-of-type {
+  margin-top: 100px;
 }
 
 .show-card-trip-title {
@@ -28,10 +28,11 @@ h1 {
   font-weight: bold;
 }
 
-.show-card-trip > img {
+.show-card-trip .img-show-trip {
   height: 200px;
   width: 100%;
   object-fit: cover;
+  overflow: hidden;
 }
 
 .show-card-trip h2 {
@@ -45,7 +46,6 @@ h1 {
   opacity: .7;
   margin: 0;
 }
-
 
 .show-card-trip .show-card-trip-infos {
   padding: 16px;
