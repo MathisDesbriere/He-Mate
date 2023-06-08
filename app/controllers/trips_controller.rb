@@ -21,7 +21,6 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
-    @user = current_user if user_signed_in?
     authorize @trip
   end
 
@@ -40,27 +39,27 @@ class TripsController < ApplicationController
     if @trip.save
       @marker = Marker.new(address: params[:other][:address], trip: @trip)
       @marker.save!
-      redirect_to @trip, notice: "Trip was successfully created."
+      if @marker.latitude.present? && @marker.longitude.present?
+        redirect_to @trip, notice: "Trip was successfully created."
+      else
+        redirect_to new_trip_path, notice: "We couldn't localize your place."
+      end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @user = current_user if user_signed_in?
     authorize @trip #line must be at the end of the method WARNING
   end
 
   def update
-    @user = current_user if user_signed_in?
     @trip.update(trip_params)
     redirect_to trip_path(@trip)
     authorize @trip #line must be at the end of the method WARNING
   end
 
   def destroy
-    @user = current_user if user_signed_in?
-
     if @trip.destroy
       redirect_to trips_path, status: :see_other
     else

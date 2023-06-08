@@ -3,28 +3,30 @@ class MarkersController < ApplicationController
 
 
   def index
-    @markers = Marker.all
     @markers = policy_scope(Marker)
-    @coordinates = @markers.geocoded.map do |marker|
+    @coordinates = @markers.where.not(trip_id: nil).geocoded.map do |marker|
       {
         lat: marker.latitude,
         lng: marker.longitude,
-        info_window_html: render_to_string(partial: "info_window", locals: {marker: marker}),
-        marker_html: render_to_string(partial: "marker", locals: {marker: marker})
+        info_window_html: render_to_string(partial: "info_window", locals: { marker: marker }),
+        marker_html: render_to_string(partial: "marker", locals: { marker: marker })
       }
     end
   end
 
   def new
     @marker = Marker.new
-    @marker.trip = @trip
     authorize @marker #line must be at the end of the method WARNING
   end
 
   def create
     @marker = Marker.new(marker_params)
     if @marker.save
-      redirect_to markers_path, notice: 'Marker was successfully created.'
+      if @marker.latitude.present? && @marker.longitude.present?
+      redirect_to new_activity_path(marker: @marker, lat: @marker.latitude, long: @marker.longitude)
+      else
+      redirect_to new_marker_path, notice: "We couldn't localize your place."
+      end
     else
       render :new, status: :unprocessable_entity
     end

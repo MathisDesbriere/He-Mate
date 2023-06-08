@@ -2,25 +2,12 @@ class ActivitiesController < ApplicationController
   require 'uri'
   require 'net/http'
   require 'openssl'
-  before_action :set_activity, only: [:show]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :index]
 
-  def search_tripadvisor_request
-    url = URI("https://api.content.tripadvisor.com/api/v1/location/search?key=CEB729020CB9489E97FB95C01BCF13BD")
-
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-
-    request = Net::HTTP::Get.new(url)
-    request["accept"] = 'application/json'
-
-    response = http.request(request)
-    puts response.read_body
-  end
 
   def index
-    @activitys = Activity.all
-    @activitys = policy_scope(Activity)
+    @activities = policy_scope(Activity)
   end
 
   def show
@@ -28,6 +15,8 @@ class ActivitiesController < ApplicationController
   end
 
   def new
+    @attractions = JSON.parse(search_tripadvisor(params[:lat], params[:long]))
+    @attractions = @attractions["data"]
     @activity = Activity.new
     authorize @activity #line must be at the end of the method WARNING
   end
@@ -36,7 +25,18 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new(activity_params)
     @activity.image.attach(params[:activity][:image])
     @activity.user = current_user
+    @activity.marker_id = params[:marker_id]
     authorize @activity #line must be at the end of the method WARNING
+  end
+
+  def edit
+    authorize @edit
+  end
+
+  def update
+    @activity.update(activity_params)
+    redirect to activity_path(@activity)
+    authorize @activity
   end
 
   def destroy
@@ -51,10 +51,24 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:title, :link)
+    params.require(:activity).permit(:title, :link, :trip)
   end
 
   def set_activity
     @activity = activity.find(params[:id])
+  end
+
+  def search_tripadvisor(lat, long)
+    api_key = ENV['TRIPADVISOR_API_KEY']
+    url = URI("https://api.content.tripadvisor.com/api/v1/location/nearby_search?latLong=#{lat}%2C#{long}&key=#{api_key}&language=en")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    request["accept"] = 'application/json'
+
+    response = http.request(request)
+    return response.read_body
   end
 end
