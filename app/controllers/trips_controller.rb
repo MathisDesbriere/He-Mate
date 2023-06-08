@@ -4,11 +4,13 @@ class TripsController < ApplicationController
 
   def index
     @trips = Trip.all
+    @comments = Comment.where(trip_id: @trips.pluck(:id))
     @trips = policy_scope(Trip)
   end
 
   def user_trips
     @user = User.find(params[:id])
+    @comments = Comment.all
 
     if user_signed_in?
       @user = current_user
@@ -21,6 +23,8 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
+    @comments = Comment.all
+
     @user = current_user if user_signed_in?
     authorize @trip
   end
