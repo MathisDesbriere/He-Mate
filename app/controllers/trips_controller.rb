@@ -3,12 +3,27 @@ class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show, :index, :new]
 
   def index
-    @trips = Trip.all
+    @comments = Comment.where(trip_id: @trips.pluck(:id))
     @trips = policy_scope(Trip)
+  end
+
+  def like
+    @trip = Trip.find(params[:id])
+    @trip.like += 1
+    @trip.save
+    skip_authorization
+
+
+    respond_to do |format|
+      format.js { render json: { count: @trip.like } }
+      format.html { redirect_to @trip } # 可能需要根據你的需求修改這個回應
+      format.json { render json: { count: @trip.like } }
+    end
   end
 
   def user_trips
     @user = User.find(params[:id])
+    @comments = Comment.all
 
     if user_signed_in?
       @user = current_user
@@ -21,6 +36,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
+    @comments = Comment.all
     authorize @trip
   end
 

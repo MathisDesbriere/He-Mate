@@ -18,9 +18,9 @@ h1 {
   border-radius: 15px;
 }
 
-#trips-index:first-of-type {
-  margin-top: 100px;
-}
+// .card-trip:first-of-type {
+//   margin-top: 60px;
+// }
 
 .card-trip-title {
   text-align: left;
@@ -28,11 +28,12 @@ h1 {
   font-weight: bold;
 }
 
-.card-trip .test {
+.card-trip .index-img-trip {
   height: 200px;
   width: 100%;
   object-fit: cover;
   overflow: hidden;
+
 }
 
 .card-trip h2 {
@@ -82,4 +83,30 @@ h1 {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+.comment-box {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.post-comment {
+  outline: none;
+}
+
+.post-comment:focus {
+  box-shadow: none !important;
+}
+
+.form-control {
+  border-radius: 20px;
+}
+
+.btn-post {
+  border-radius: 0px 20px 20px 0px;
+  background-color: aquamarine;
+  font-weight: bold;
+  border: 0.5px solid #ddd;
+  height: 38px;
 }
