@@ -84,3 +84,29 @@ h1 {
   justify-content: flex-end;
   align-items: flex-end;
 }
+
+.comment-box {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.post-comment {
+  outline: none;
+}
+
+.post-comment:focus {
+  box-shadow: none !important;
+}
+
+.form-control {
+  border-radius: 20px;
+}
+
+.btn-post {
+  border-radius: 0px 20px 20px 0px;
+  background-color: aquamarine;
+  font-weight: bold;
+  border: 0.5px solid #ddd;
+  height: 38px;
+}
