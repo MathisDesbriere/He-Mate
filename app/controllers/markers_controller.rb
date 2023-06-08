@@ -17,6 +17,7 @@ class MarkersController < ApplicationController
 
   def new
     @marker = Marker.new
+    @marker.trip = @trip
     authorize @marker #line must be at the end of the method WARNING
   end
 
