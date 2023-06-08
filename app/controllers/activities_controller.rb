@@ -1,6 +1,22 @@
 class ActivitiesController < ApplicationController
+  require 'uri'
+  require 'net/http'
+  require 'openssl'
   before_action :set_activity, only: [:show]
   skip_before_action :authenticate_user!, only: [:show, :index]
+
+  def search_tripadvisor_request
+    url = URI("https://api.content.tripadvisor.com/api/v1/location/search?key=CEB729020CB9489E97FB95C01BCF13BD")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    request["accept"] = 'application/json'
+
+    response = http.request(request)
+    puts response.read_body
+  end
 
   def index
     @activitys = Activity.all
