@@ -1,22 +1,26 @@
-<% if @user == current_user %>
-<div class="user-profile-navbar">
-<div class="nav-item">
-<div class="nav-content">
-<h2><%= link_to 'Your Trips', user_trips_path(current_user) %>
-</h2>
+<div class="form">
+
+
+  <% if @user == current_user %>
+    <div class="user-profile-navbar">
+      <div class="nav-item">
+        <div class="nav-content">
+          <h2>Your trip</h2>
+        </div>
+      </div>
+      <div class="nav-item">
+        <div class="nav-content">
+          <h2>My profile</h2>
+        </div>
+      </div>
+    </div>
+
+    <%= image_tag @user.image.url, class: "avatar-bordered" %>
+
+    <%= @user.first_name %>
+    <%= @user.last_name %>
+  <% else %>
+    <h1>Access denied</h1>
+  <% end %>
 </div>
 
-</div>
-<div class="nav-item  nav-profile">
-<div class="nav-content">
-    <h2><%= link_to 'My profile', user_path(current_user) %></h2>
-</div></div>
-
-</div>
-<%= image_tag @user.image.url, class: "profile-pic" %>
-<b><%= @user.first_name %></b>
-<%= @user.last_name %>
-
-<% else %>
-  <h1>You r not have auth</h1>
-<% end %>
