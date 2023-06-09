@@ -8,9 +8,11 @@
 
     <% pictures = JSON.parse(pictures_tripadvisor(attraction['location_id']))['data'] %>
     <% pictures.first(2).each do |picture| %>
+    <div class="activity-picture">
       <% if picture['images']['medium'] %>
         <%= image_tag picture['images']['medium']['url'], class: 'medium-picture' %>
       <% end %>
+    </div>
     <% end %>
 
   <% end %>
