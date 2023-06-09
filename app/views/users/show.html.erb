@@ -12,10 +12,17 @@
       </div>
     </div>
   </div>
+
+
+
     <%= image_tag @user.image.url, class: "avatar-bordered" %>
 
     <%= @user.first_name %>
     <%= @user.last_name %>
+
+
+
+
   <% else %>
     <h1>Access denied</h1>
   <% end %>

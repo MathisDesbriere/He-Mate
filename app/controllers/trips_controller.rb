@@ -82,11 +82,18 @@ class TripsController < ApplicationController
   end
 
   def destroy
+    # @markers = Marker.where(trip_id: @trip.id)
+
+    # if @markers.destroy_all
     if @trip.destroy
-      redirect_to trips_path, status: :see_other
+      redirect_to user_trips_path(@user), status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
+    # else
+    #   render :new, status: :unprocessable_entity
+    # end
+
     authorize @trip #line must be at the end of the method WARNING
   end
 
@@ -99,4 +106,5 @@ class TripsController < ApplicationController
   def set_trip
     @trip = Trip.find(params[:id])
   end
+
 end
