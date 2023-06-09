@@ -7,6 +7,7 @@
         <%end%>
       </div>
 
+
       <% if trip.images.any? %>
         <div class="carousel-inner">
             <div id="<%="carouselExampleIndicators#{index}"%>" class="carousel slide">
@@ -40,6 +41,7 @@
 
         </div>
 
+
       <% else %>
         <%= link_to trip_path(trip) do %>
             <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
@@ -51,6 +53,7 @@
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
           <p>Description : <%= trip.description %></p>
+
 
           <% if trip.marker %>
           <p>Address: <%= trip.marker.address %></p>
@@ -87,3 +90,4 @@
     </div>
   </div>
 <% end %>
+</div>
