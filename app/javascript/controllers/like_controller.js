@@ -5,7 +5,6 @@ export default class extends Controller {
 
   connect() {
     // Code to run when the controller is connected
-    console.log("Norman test");
   }
 
   async like(event) {
