@@ -1,5 +1,9 @@
 <% @trips.each_with_index do |trip, index| %>
+
+
   <div class="card-trip">
+
+
     <div class= "card-trip-title">
       <div class="">
         <%= link_to user_trips_path(@user) do %>
@@ -24,7 +28,7 @@
           <% else %>
             <%= link_to trip_path(trip) do %>
               <div class="carousel-item active">
-                <%= image_tag("default-trip-img.jpg", class: "index-img-trip") %>
+                <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
               </div>
             <% end %>
           <% end %>
@@ -42,12 +46,15 @@
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
           <p>Description : <%= trip.description %></p>
+
           <% if trip.marker %>
           <p>Address: <%= trip.marker.address %></p>
           <% else %>
             <p>Address not available</p>
           <% end %>
         </div>
+
+
 
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
           <h2 data-target="like-count"><%= trip.like %></h2>
@@ -70,6 +77,7 @@
               </div>
           <% end %>
         </div>
+
       </div>
     </div>
   </div>
