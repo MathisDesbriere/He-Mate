@@ -1,5 +1,9 @@
 <% @trips.each_with_index do |trip, index| %>
+
+
   <div class="card-trip">
+
+
     <div class= "card-trip-title">
       <div class="">
         <%= link_to user_trips_path(@user) do %>
@@ -25,7 +29,7 @@
           <% else %>
             <%= link_to trip_path(trip) do %>
               <div class="carousel-item active">
-                <%= image_tag("default-trip-img.jpg", class: "index-img-trip") %>
+                <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
               </div>
             <% end %>
           <% end %>
@@ -45,6 +49,8 @@
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
           <p>Description : <%= trip.description %></p>
+        </div>
+      </div>
 
 
       <div class="card-trip-user">
@@ -54,28 +60,31 @@
           <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
         <% end %>
       </div>
-   <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-  <h2 data-target="like-count"><%= trip.like %></h2>
-  <%= link_to like_trip_path(trip), method: :post, remote: true, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" } do %>
-    <i data-target="like-icon" class="fa <%= trip.like&.positive? ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
-  <% end %>
-</div>
 
-</div>
+      <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
+          <h2 data-target="like-count"><%= trip.like %></h2>
+            <%= link_to like_trip_path(trip), method: :post, remote: true, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" } do %>
+            <i data-target="like-icon" class="fa <%= trip.like&.positive? ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+            <% end %>
+      </div>
 
-       <div class="card-trip-comments">
-      <%= render partial: 'comments/comment', collection: trip.comments %>
-    </div>
-      <div class="comment-bx">
-        <%= form_for Comment.new do |f| %>
-          <%= f.hidden_field :trip_id, value: trip.id %>
-          <div class="input-group">
-          <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
-          <div class="input-group-append">
-          <%= f.submit "Post", class: "btn-post float-right" %>
-          </div>
-          </div>
-        <% end %>
+
+        <div class="card-trip-comments">
+        <%= render partial: 'comments/comment', collection: trip.comments %>
+        </div>
+
+        <div class="comment-bx">
+          <%= form_for Comment.new do |f| %>
+            <%= f.hidden_field :trip_id, value: trip.id %>
+              <div class="input-group">
+                <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
+                <div class="input-group-append">
+                  <%= f.submit "Post", class: "btn-post float-right" %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+
       </div>
     </div>
   </div>
