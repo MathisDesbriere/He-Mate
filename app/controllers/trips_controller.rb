@@ -10,7 +10,7 @@ class TripsController < ApplicationController
 
   def like
     @trip = Trip.find(params[:id])
-    if @trip.like == nil
+    if @trip.like.nil?
       @trip.like = 0
     else
       @trip.like += 1
