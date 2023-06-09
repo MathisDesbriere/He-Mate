@@ -1,9 +1,5 @@
 <% @trips.each_with_index do |trip, index| %>
-
-
   <div class="card-trip">
-
-
     <div class= "card-trip-title">
       <div class="">
         <%= link_to user_trips_path(@user) do %>
@@ -11,39 +7,49 @@
         <%end%>
       </div>
 
-      <div id="<%="carouselExampleIndicators#{index}"%>" class="carousel slide">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
+      <% if trip.images.any? %>
         <div class="carousel-inner">
-          <% if trip.images.any? %>
-            <% trip.images.each_with_index do |image, index| %>
-              <%= link_to trip_path(trip) do %>
-                <div class="carousel-item<%= " active" if index == 0 %>">
-                  <%= cl_image_tag(image.key, class: "index-img-trip") %>
+            <div id="<%="carouselExampleIndicators#{index}"%>" class="carousel slide">
+              <% unless trip.images.size == 1  %>
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
               <% end %>
-            <% end %>
-          <% else %>
-            <%= link_to trip_path(trip) do %>
-              <div class="carousel-item active">
-                <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
-              </div>
-            <% end %>
+              <% trip.images.each_with_index do |image, index| %>
+                <%= link_to trip_path(trip) do %>
+                  <div class="carousel-item<%= " active" if index == 0 %>">
+                    <%= cl_image_tag(image.key, class: "index-img-trip") %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+
+          <% unless trip.images.size == 1  %>
+            <button class="carousel-control-prev" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           <% end %>
+
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+
+      <% else %>
+        <%= link_to trip_path(trip) do %>
+            <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
+        <% end %>
+      <% end %>
+
+
+
+
 
       <div class="card-trip-infos">
         <div class="card-trip-details">
