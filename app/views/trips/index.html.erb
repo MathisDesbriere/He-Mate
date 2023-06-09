@@ -1,150 +1,85 @@
 <div class="form">
   <% @trips.each_with_index do |trip, index| %>
     <div class="card-trip">
-      <div class= "card-trip-title">
-        <div class="">
+      <div class="card-trip-title">
+        <div>
           <%= link_to user_trips_path(@user) do %>
             <p>User: <%= trip.user.last_name %></p>
-          <%end%>
+          <% end %>
         </div>
 
-
-      <% if trip.images.any? %>
-        <div class="carousel-inner">
-            <div id="<%="carouselExampleIndicators#{index}"%>" class="carousel slide">
-              <% unless trip.images.size == 1  %>
+        <% if trip.images.any? %>
+          <div class="carousel-inner">
+            <div id="carouselExampleIndicators<%= index %>" class="carousel slide">
+              <% unless trip.images.size == 1 %>
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
               <% end %>
-              <% trip.images.each_with_index do |image, index| %>
+
+              <% trip.images.each_with_index do |image, i| %>
                 <%= link_to trip_path(trip) do %>
-                  <div class="carousel-item<%= " active" if index == 0 %>">
+                  <div class="carousel-item<%= " active" if i == 0 %>">
                     <%= cl_image_tag(image.key, class: "index-img-trip") %>
                   </div>
                 <% end %>
               <% end %>
             </div>
 
-          <% unless trip.images.size == 1  %>
-            <button class="carousel-control-prev" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          <% end %>
-
-        </div>
-
-
-      <% else %>
-        <%= link_to trip_path(trip) do %>
-            <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
-        <% end %>
-      <% end %>
-
-
-      <div class="card-trip-infos">
-        <div class="card-trip-details">
-          <h2><%= trip.title %></h2>
-          <p>Description : <%= trip.description %></p>
-
-
-          <% if trip.marker %>
-          <p>Address: <%= trip.marker.address %></p>
-          <% else %>
-            <p>Address not available</p>
-          <% end %>
-        </div>
-
-
-
-        <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-          <h2 data-target="like-count"><%= trip.like %></h2>
-            <%= link_to like_trip_path(trip), method: :post, remote: true, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" } do %>
-            <i data-target="like-icon" class="fa <%= trip.like&.positive? ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
-            <% end %>
-      </div>
-      </div>
-
-
-        <div class="card-trip-comments">
-        <%= render partial: 'comments/comment', collection: trip.comments %>
-        </div>
-        <div class="comment-box">
-          <%= form_for Comment.new do |f| %>
-            <%= f.hidden_field :trip_id, value: trip.id %>
-              <div class="input-group">
-                <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
-                  <%= f.submit "Post", class: "btn-post button" %>
-              </div>
-
-            <% unless trip.images.size == 1  %>
-              <button class="carousel-control-prev" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="prev">
+            <% unless trip.images.size == 1 %>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
 
-              <button class="carousel-control-next" type="button" data-bs-target="#<%="carouselExampleIndicators#{index}"%>" data-bs-slide="next">
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
             <% end %>
-
           </div>
-
         <% else %>
           <%= link_to trip_path(trip) do %>
-              <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
+            <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
           <% end %>
         <% end %>
-
 
         <div class="card-trip-infos">
           <div class="card-trip-details">
             <h2><%= trip.title %></h2>
-            <p>Description : <%= trip.description %></p>
+            <p>Description: <%= trip.description %></p>
 
             <% if trip.marker %>
-            <p>Address: <%= trip.marker.address %></p>
+              <p>Address: <%= trip.marker.address %></p>
             <% else %>
               <p>Address not available</p>
             <% end %>
           </div>
 
-
-
           <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
             <h2 data-target="like-count"><%= trip.like %></h2>
-              <%= link_to like_trip_path(trip), method: :post, remote: true, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" } do %>
+            <%= link_to like_trip_path(trip), method: :post, remote: true, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" } do %>
               <i data-target="like-icon" class="fa <%= trip.like&.positive? ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
-              <% end %>
-        </div>
-        </div>
-
-
-          <div class="card-trip-comments">
-          <%= render partial: 'comments/comment', collection: trip.comments %>
-          </div>
-          <div class="comment-box">
-            <%= form_for Comment.new do |f| %>
-              <%= f.hidden_field :trip_id, value: trip.id %>
-                <div class="input-group">
-                  <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
-                    <%= f.submit "Post", class: "btn-post button" %>
-                </div>
             <% end %>
           </div>
+        </div>
 
+        <div class="card-trip-comments">
+          <%= render partial: 'comments/comment', collection: trip.comments %>
+        </div>
+
+        <div class="comment-box">
+          <%= form_for Comment.new do |f| %>
+            <%= f.hidden_field :trip_id, value: trip.id %>
+            <div class="input-group">
+              <%= f.text_field :content, placeholder: "Add comment here...", class: "form-control post-comment" %>
+              <%= f.submit "Post", class: "btn-post button" %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>
