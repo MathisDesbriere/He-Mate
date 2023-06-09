@@ -27,3 +27,19 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.comment-grid {
+  display: grid;
+  grid-template-columns: 0.5fr 6fr;
+  column-gap: 3px;
+}
+
+.comment-grid p {
+  align-self: center;
+
+}
+
+.comment-grid img {
+  width: 25px;
+  height: 25px;
+}
