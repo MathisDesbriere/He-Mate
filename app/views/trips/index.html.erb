@@ -3,7 +3,7 @@
     <div class= "card-trip-title">
       <div class="">
         <%= link_to user_trips_path(@user) do %>
-          <p>User: <%= trip.user.last_name %></p>
+          <p> <%User: <%= trip.user.last_name %></p>
         <%end%>
       </div>
 
@@ -46,7 +46,7 @@
           <h2><%= trip.title %></h2>
           <p>Description : <%= trip.description %></p>
 
-       
+
       <div class="card-trip-user">
         <% if trip.user.image.present? %>
           <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
