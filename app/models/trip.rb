@@ -5,6 +5,7 @@ class Trip < ApplicationRecord
 
   has_many_attached :images
   has_many :comments
+  has_one :marker
 
   validates :title, presence: true, uniqueness: true
   validates :description, length: { minimum: 5 }

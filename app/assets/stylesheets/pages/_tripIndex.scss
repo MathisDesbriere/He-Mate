@@ -15,6 +15,7 @@ h1 {
   margin-right: 5%;
   margin-top: 5%;
   margin-bottom: 5%;
+  padding-bottom: 0px;
   border-radius: 15px;
 }
 
@@ -52,18 +53,10 @@ h1 {
 .card-trip .card-trip-infos {
   padding: 16px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: self-start;
   position: relative;
-}
-
-.card-trip-infos .card-trip-user {
-  position: absolute;
-  right: 10px;
-  top: -20px;
-  width: 40px;
-  white-space: nowrap;
-  text-align: center;
 }
 
 .avatar-bordered {
@@ -79,16 +72,11 @@ h1 {
   line-height: 1rem;
 }
 
-.card-trip-like {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
 
 .comment-box {
   padding: 15px;
   background-color: #fff;
-  border: 1px solid #ddd;
+  display: relative;
 }
 
 .post-comment {
@@ -100,17 +88,21 @@ h1 {
 }
 
 .form-control {
-  border-radius: 20px;
+  border-radius: 0px 0px 0px 15px;
 }
 
 .btn-post {
-  border-radius: 0px 20px 20px 0px;
-  background-color: aquamarine;
+  border-radius: 0px 0px 13px 0px;
   font-weight: bold;
-  border: 0.5px solid #ddd;
   height: 38px;
 }
 
 .card-trip .button {
 margin-left: 50%;
+  }
+
+.comment-box {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  padding: 0px;
 }
