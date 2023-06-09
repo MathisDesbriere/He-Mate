@@ -60,7 +60,7 @@ class ActivitiesController < ApplicationController
 
   def search_tripadvisor(lat, long)
     api_key = ENV['TRIPADVISOR_API_KEY']
-    url = URI("https://api.content.tripadvisor.com/api/v1/location/nearby_search?latLong=#{lat}%2C#{long}&key=#{api_key}&language=en")
+    url = URI("https://api.content.tripadvisor.com/api/v1/location/nearby_search?latLong=#{lat}%2C#{long}&key=#{api_key}&category=attractions&language=en")
 
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
@@ -71,4 +71,5 @@ class ActivitiesController < ApplicationController
     response = http.request(request)
     return response.read_body
   end
+
 end
