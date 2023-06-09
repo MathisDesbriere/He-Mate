@@ -14,10 +14,12 @@ class TripsController < ApplicationController
     @trip.save
     skip_authorization
 
-
     respond_to do |format|
       format.js { render json: { count: @trip.like } }
-      format.html { redirect_to @trip } # 可能需要根據你的需求修改這個回應
+      format.html do
+        session[:scroll_position] = params[:scroll_position]
+        redirect_back(fallback_location: root_path)
+      end
       format.json { render json: { count: @trip.like } }
     end
   end
