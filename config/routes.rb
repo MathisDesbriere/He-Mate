@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :trips do
     resources :markers, only: [:new, :create]
+
     resources :activities, only: [:new, :create]
     resources :comments, only: [:create, :destroy]
     member do
@@ -20,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :activities, only: [:index, :show, :update]
+  resources :activities, only: [:index, :show, :destroy, :create, :new] do
+    resources :markers, only: [:new, :create]
+  end
   resources :markers, only: [:index, :show, :destroy, :create, :new]
 end

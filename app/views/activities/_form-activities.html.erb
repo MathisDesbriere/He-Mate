@@ -1,0 +1,10 @@
+<%= simple_form_for activity do |f| %>
+    <% @attractions.each do |attraction| %>
+      <label>
+        <%= check_box_tag 'attraction_ids[]', attraction['location_id'] %>
+        <b><%= attraction['name'] %></b>
+      </label>
+      <p><%= attraction['address_obj']['address_string'] %></p>
+    <% end %>
+  <%= f.button :submit, class: 'button', value: 'Submit' %>
+<% end %>

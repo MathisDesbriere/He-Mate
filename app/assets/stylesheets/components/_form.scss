@@ -1,10 +1,12 @@
 .form {
   width: 80%;
   margin: 10vh auto;
+  margin-top: 80px;
+}
 
-  @media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
+  .form {
     width: 95%;
-    margin: 50vh auto;
-    transform: translateY(-50%);
+    margin-top: 60px;
   }
 }
