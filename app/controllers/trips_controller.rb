@@ -4,19 +4,26 @@ class TripsController < ApplicationController
 
   def index
     # @comments = Comment.where(trip_id: @trips.pluck(:id))
+
     @trips = policy_scope(Trip)
   end
 
   def like
     @trip = Trip.find(params[:id])
-    @trip.like += 1
+    if @trip.like == nil
+      @trip.like = 0
+    else
+      @trip.like += 1
+    end
     @trip.save
     skip_authorization
 
-
     respond_to do |format|
       format.js { render json: { count: @trip.like } }
-      format.html { redirect_to @trip } # 可能需要根據你的需求修改這個回應
+      format.html do
+        session[:scroll_position] = params[:scroll_position]
+        redirect_back(fallback_location: root_path)
+      end
       format.json { render json: { count: @trip.like } }
     end
   end
@@ -49,7 +56,6 @@ class TripsController < ApplicationController
   def create
     @trip = Trip.new(trip_params)
     @user = current_user if user_signed_in?
-    @trip.images.attach(params[:trip][:images])
     @trip.user = current_user
     authorize @trip
     if @trip.save
@@ -76,11 +82,18 @@ class TripsController < ApplicationController
   end
 
   def destroy
+    # @markers = Marker.where(trip_id: @trip.id)
+
+    # if @markers.destroy_all
     if @trip.destroy
-      redirect_to trips_path, status: :see_other
+      redirect_to user_trips_path(@user), status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
+    # else
+    #   render :new, status: :unprocessable_entity
+    # end
+
     authorize @trip #line must be at the end of the method WARNING
   end
 
@@ -93,4 +106,5 @@ class TripsController < ApplicationController
   def set_trip
     @trip = Trip.find(params[:id])
   end
+
 end
