@@ -25,15 +25,5 @@
       </div>
     </div>
   </div>
-  <div data-controller="insert-in-list">
-  <div data-insert-in-list-target="items">
-    <% if @trip.comments.blank? %>
-      Be the first to leave a review for <%= @trip.title %>
-    <% else %>
-      <% @trip.comments.each do |comment| %>
-            <%= render "comments/comment", comment: comment %>
-      <% end %>
-    <% end %>
-  </div>
 
 </div>
