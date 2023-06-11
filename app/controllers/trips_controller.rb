@@ -81,6 +81,10 @@ class TripsController < ApplicationController
   end
 
   def destroy
+    if @trip.comments.exists?
+      @trip.comments.destroy_all
+    end
+    # @markers = Marker.where(trip_id: @trip.id)
 
     if @trip.comments.exists?
       @trip.comments.destroy_all # 刪除與該 trips 記錄相關聯的 comments 記錄

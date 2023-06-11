@@ -4,8 +4,6 @@ class CommentsController < ApplicationController
 
   def create
     @trip = Trip.find(params[:trip_id])
-
-    raise
     @comment = Comment.new(comment_params)
 
     @comment.user_id = current_user.id if user_signed_in?
