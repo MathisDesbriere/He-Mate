@@ -69,20 +69,20 @@
       </div>
       </div>
 
-
-        <div class="card-trip-comments">
-        <%= render partial: 'comments/comment', collection: trip.comments %>
+        <div data-controller="insert-in-list">
+          <div data-insert-in-list-target="items">
+            <% if trip.comments.blank? %>
+              Be the first to leave a review for <%= trip.title %>
+            <% else %>
+            <% trip.comments.each do |comment| %>
+            <%= render "comments/comment", comment: comment %>
+              <% end %>
+            <% end %>
         </div>
         <div class="comment-box">
-          <%= form_for Comment.new do |f| %>
-            <%= f.hidden_field :trip_id, value: trip.id %>
-              <div class="input-group">
-                <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
-                  <%= f.submit "Post", class: "btn-post button" %>
-              </div>
-          <% end %>
+    <%= render "comments/form", trip: @trip, comment: @comment %>
         </div>
-
+        </div>
       </div>
     </div>
   </div>

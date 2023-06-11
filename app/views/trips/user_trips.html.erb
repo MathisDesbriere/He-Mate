@@ -15,12 +15,16 @@
 
   <% @trips.each_with_index do |trip, index| %>
     <div class="card-trip">
-      <div class= "card-trip-title">
+      <div class= "card-trip-title-your-trips">
+        <div class="trip-title">
           <p>User: <%= trip.user.last_name %></p>
+        </div>
+        <div class="delete">
+            <%= link_to "Delete", trip_path(trip),  data: { turbo_confirm: "Are you sure you want to delete this trip?", turbo_method: :delete }, class: "button-sml" %>
+        </div>
       </div>
 
 
-      <%= link_to "Delete", trip_path(trip),  data: { turbo_confirm: "Are you sure you want to delete this trip?", turbo_method: :delete }, class: "button-sml" %>
 
 
         <% if trip.images.any? %>

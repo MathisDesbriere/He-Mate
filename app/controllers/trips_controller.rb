@@ -4,7 +4,7 @@ class TripsController < ApplicationController
 
   def index
     # @comments = Comment.where(trip_id: @trips.pluck(:id))
-
+    @comment = Comment.new
     @trips = policy_scope(Trip)
   end
 
@@ -17,7 +17,6 @@ class TripsController < ApplicationController
     end
     @trip.save
     skip_authorization
-
     respond_to do |format|
       format.js { render json: { count: @trip.like } }
       format.html do
@@ -43,7 +42,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
-    @comments = Comment.all
+    @comment = Comment.new
     authorize @trip
   end
 
@@ -82,18 +81,16 @@ class TripsController < ApplicationController
   end
 
   def destroy
-    # @markers = Marker.where(trip_id: @trip.id)
 
-    # if @markers.destroy_all
+    if @trip.comments.exists?
+      @trip.comments.destroy_all # 刪除與該 trips 記錄相關聯的 comments 記錄
+    end
+
     if @trip.destroy
-      redirect_to user_trips_path(@user), status: :see_other
+      redirect_to trips_path, status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
-    # else
-    #   render :new, status: :unprocessable_entity
-    # end
-
     authorize @trip #line must be at the end of the method WARNING
   end
 
@@ -106,5 +103,4 @@ class TripsController < ApplicationController
   def set_trip
     @trip = Trip.find(params[:id])
   end
-
 end

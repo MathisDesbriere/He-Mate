@@ -10,6 +10,8 @@
       <h2><%= @trip.title.capitalize %></h2>
       <p>Description : <%= @trip.description %></p>
     </div>
+    <%= render 'comments/form', trip: @trip, comment: @comment %>
+
       <div class="show-card-trip-user">
         <% if @trip.user.image.present? %>
           <%= image_tag @trip.user.image.url, class: "avatar-bordered" %>
@@ -23,4 +25,15 @@
       </div>
     </div>
   </div>
+  <div data-controller="insert-in-list">
+  <div data-insert-in-list-target="items">
+    <% if @trip.comments.blank? %>
+      Be the first to leave a review for <%= @trip.title %>
+    <% else %>
+      <% @trip.comments.each do |comment| %>
+            <%= render "comments/comment", comment: comment %>
+      <% end %>
+    <% end %>
+  </div>
+
 </div>

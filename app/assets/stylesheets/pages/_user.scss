@@ -1,0 +1,25 @@
+
+
+.card-trip-title-your-trips {
+  text-align: left;
+  text-indent: 20px;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end;
+}
+
+
+.delete {
+  align-self: end;
+  margin-bottom: 10px;
+}
+
+
+.avatar-bordered {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border: white 1px solid;
+}
