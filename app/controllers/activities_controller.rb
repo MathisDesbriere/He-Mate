@@ -22,11 +22,24 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    @activity = Activity.new(activity_params)
-    @activity.image.attach(params[:activity][:image])
-    @activity.user = current_user
-    @activity.marker_id = params[:marker_id]
-    authorize @activity #line must be at the end of the method WARNING
+    activities_params = params[:activity]["activities"]
+
+    activities_params.each do |attraction_id, attraction_details|
+      next unless attraction_details['selected'] == '1' # Vérifier si l'attraction est sélectionnée
+
+      activity = Activity.new(
+        title: attraction_details['name'],
+        address: attraction_details['address']
+      )
+      activity.picture = attraction_details['picture'] if attraction_details['picture'].present?
+      authorize activity
+      if activity.save
+        redirect_to activities_path, status: :see_other
+      else
+        render :new, status: :unprocessable_entity
+        break
+      end
+    end
   end
 
   def edit
@@ -51,7 +64,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:title, :link, :trip)
+    params.require(:activity).permit(:title, :trip, :address, :attraction_id)
   end
 
   def set_activity
