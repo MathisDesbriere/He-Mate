@@ -19,14 +19,14 @@ export default class extends Controller {
     if (this.clicked) {
       try {
         console.log(this.clicked)
-          const response = await fetch(`/trips/${tripId}/like?count=1`,
+          const response = await fetch(`/trips/${tripId}/like?count=-1`,
 
           {method: "POST", headers: {'content-type': 'application/json'
            ,'accept': 'application/json'
           ,"X-CSRF-Token": document.querySelector("[name='csrf-token']").getAttribute("content")}})
           const data = await response.json();
 
-          if (this.clicked) {
+          if (!this.clicked) {
             this.likeIconTarget.classList.remove("fa-regular");
             this.likeIconTarget.classList.add("fa-solid");
           } else {
@@ -40,14 +40,14 @@ export default class extends Controller {
       this.clicked = false;
     } else {
       try {
-        const response = await fetch(`/trips/${tripId}/like?count=-1`,
+        const response = await fetch(`/trips/${tripId}/like?count=1`,
 
         {method: "POST", headers: {'content-type': 'application/json'
          ,'accept': 'application/json'
         ,"X-CSRF-Token": document.querySelector("[name='csrf-token']").getAttribute("content")}})
         const data = await response.json();
 
-        if (this.clicked) {
+        if (!this.clicked) {
           this.likeIconTarget.classList.remove("fa-regular");
           this.likeIconTarget.classList.add("fa-solid");
         } else {
