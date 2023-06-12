@@ -1,12 +1,44 @@
-<div class="form">
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-12 col-md-6 offset-lg-3">
-        <div class="bg-white rounded p-3 shadow">
-          <h3>Select the place of your activity :</h3>
-            <%= render "form-markers", marker: @marker %>
+<% if @user == current_user %>
+  <div class="user-profile-navbar">
+    <div class="nav-item nav-trips">
+      <%= link_to new_marker_path, class: "nav-content" do %>
+        <h2>Search</h2>
+      <% end %>
+    </div>
+
+    <div class="nav-item">
+      <%= link_to activities_path, class: "nav-content" do %>
+        <h2>My activities</h2>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-12 col-md-6 offset-lg-3">
+          <div class="bg-white rounded p-3 shadow">
+            <h3>Select the place of your activity :</h3>
+              <%= render "form-markers", marker: @marker %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+<% else %>
+
+  <div class="form">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-12 col-md-6 offset-lg-3">
+          <div class="bg-white rounded p-3 shadow">
+            <h3>Select the place of your activity :</h3>
+              <%= render "form-markers", marker: @marker %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

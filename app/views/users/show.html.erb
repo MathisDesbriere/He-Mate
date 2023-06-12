@@ -1,18 +1,25 @@
 <% if @user == current_user %>
-<div class="user-profile-navbar">
-  <div class="nav-item nav-trips">
-    <div class="nav-content">
-      <h2><%= link_to 'Your Trips', user_trips_path(current_user) %></h2>
+  <div class="user-profile-navbar">
+    <div class="nav-item">
+      <%= link_to user_trips_path(current_user), class: "nav-content" do %>
+        <div class="nav-content">
+          <h2>Your Trips</h2>
+        </div>
+      <% end %>
     </div>
   </div>
 
-  <div class="nav-item nav-profile">
-    <div class="nav-content">
-      <h2><%= link_to 'My profile', user_path(current_user) %></h2>
-      <%# <%= render partial: "edit"  %>
+    <div class="nav-item nav-profile">
+      <%= link_to user_path(current_user), class: "nav-content" do %>
+        <div class="nav-content">
+          <h2>My profile</h2>
+        </div>
+      <% end %>
+
     </div>
   </div>
 </div>
+
 
 
   <h1><%= @user.first_name + " " + @user.last_name %></h1>

@@ -9,14 +9,17 @@
 
       <%= activity_fields.hidden_field :name, value: attraction['name'] %>
       <%= activity_fields.hidden_field :address, value: attraction['address_obj']['address_string'] %>
-
+      <%= activity_fields.hidden_field :marker, value: @marker %>
       <% pictures = JSON.parse(pictures_tripadvisor(attraction['location_id']))['data'] %>
-      <% pictures.first(2).each do |picture| %>
-        <% if picture['images']['medium'] %>
-          <%= activity_fields.hidden_field :picture, value: picture['images']['medium']['url'] %>
-          <div class="activity-picture">
-            <%= image_tag picture['images']['medium']['url'], class: 'medium-picture' %>
-          </div>
+      <% if pictures.present? %>
+        <% pictures.first(2).each_with_index do |picture, index| %>
+          <% if picture['images']['large'] %>
+            <% picture_field_name = "picture_#{index + 1}".to_sym %>
+            <%= activity_fields.hidden_field picture_field_name, value: picture['images']['large']['url'] %>
+            <div class="activity-picture">
+              <%= image_tag picture['images']['large']['url'], class: 'medium-picture' %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

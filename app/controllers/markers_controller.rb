@@ -23,9 +23,9 @@ class MarkersController < ApplicationController
     @marker = Marker.new(marker_params)
     if @marker.save
       if @marker.latitude.present? && @marker.longitude.present?
-      redirect_to new_activity_path(marker: @marker, lat: @marker.latitude, long: @marker.longitude)
+        redirect_to new_activity_path(marker: @marker, lat: @marker.latitude, long: @marker.longitude)
       else
-      redirect_to new_marker_path, notice: "We couldn't localize your place."
+        redirect_to new_marker_path, notice: "We couldn't localize your place."
       end
     else
       render :new, status: :unprocessable_entity
