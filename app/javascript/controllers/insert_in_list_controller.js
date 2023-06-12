@@ -2,6 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["items", "form"]
+  //Connect to insert-in-list
+  connect() {
+    console.log(this.formTarget);
+    console.log(this.itemsTarget);
+  }
+
 
   send(event) {
     event.preventDefault()
@@ -16,7 +22,11 @@ export default class extends Controller {
         if (data.inserted_item) {
           this.itemsTarget.insertAdjacentHTML("beforeend", data.inserted_item)
         }
-        this.formTarget.outerHTML = data.form
+        this.formTarget.reset();
+        this.formTarget.querySelector(".post-comment").focus();
       })
+      .catch(error => {
+        console.error(error)
+      });
   }
 }

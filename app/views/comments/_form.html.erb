@@ -1,11 +1,13 @@
-<%= simple_form_for([trip, comment], remote: true,
+<%= simple_form_for([trip, comment],
   data: {
     insert_in_list_target: "form",
     action: "submit->insert-in-list#send"
   }) do |f|
 %>
+  <div class="input-group">
 
-  <%= f.input :content %>
+  <%= f.text_field :content, placeholder: "Add comment here...", class: "form-control post-comment"  %>
 
-  <%= f.button :submit %>
+  <%= f.submit "Post" , class: "btn-post button"%>
+  </div>
 <% end %>
