@@ -10,8 +10,11 @@ application.register("address-autocomplete", AddressAutocompleteController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import MapController from "./map_controller"
-application.register("map", MapController)
+import InsertInListController from "./insert_in_list_controller"
+application.register("insert-in-list", InsertInListController)
 
 import LikeController from "./like_controller"
 application.register("like", LikeController)
+
+import MapController from "./map_controller"
+application.register("map", MapController)

@@ -3,9 +3,9 @@ class TripsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show, :index, :new]
 
   def index
-    # @comments = Comment.where(trip_id: @trips.pluck(:id))
-
     @trips = policy_scope(Trip)
+    @comments = Comment.new
+
   end
 
   def like
@@ -43,7 +43,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
-    @comments = Comment.all
+    @comments = Comment.new
     authorize @trip
   end
 
