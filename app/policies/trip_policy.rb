@@ -6,6 +6,13 @@ class TripPolicy < ApplicationPolicy
     end
   end
 
+  class UserTripsScope < Scope
+    # NOTE: Be explicit about which records you allow access to!
+    def resolve
+      scope.order(created_at: :desc).where(user: user)
+    end
+  end
+
   def show?
     true
   end

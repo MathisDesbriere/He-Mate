@@ -1,28 +1,35 @@
-  <% if @user == current_user %>
-  <div class="user-profile-navbar">
-    <div class="nav-item nav-trips">
-      <div class="nav-content">
-        <h2><%= link_to 'Your Trips', user_trips_path(current_user) %></h2>
-      </div>
-    </div>
-
-    <div class="nav-item nav-profile">
-      <div class="nav-content">
-        <h2><%= link_to 'My profile', edit_registration_path(current_user) %></h2>
-        <%# <%= render partial: "edit"  %>
-      </div>
+<% if @user == current_user %>
+<div class="user-profile-navbar">
+  <div class="nav-item nav-trips">
+    <div class="nav-content">
+      <h2><%= link_to 'Your Trips', user_trips_path(current_user) %></h2>
     </div>
   </div>
 
+  <div class="nav-item nav-profile">
+    <div class="nav-content">
+      <h2><%= link_to 'My profile', user_path(current_user) %></h2>
+      <%# <%= render partial: "edit"  %>
+    </div>
+  </div>
+</div>
 
 
-    <%= image_tag @user.image.url, class: "avatar-bordered" %>
-
-    <%= @user.first_name %>
-    <%= @user.last_name %>
+  <h1><%= @user.first_name + " " + @user.last_name %></h1>
 
 
-  <% else %>
-    <h1>Access denied</h1>
-  <% end %>
+<%= image_tag @user.image.url, class: "avatar-bordered" %>
+<br>
+<p>Edit my info:</p>
+
+
+<%= link_to edit_registration_path(current_user), class: "button-profile-edt" do %>
+  <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
+<% end %>
+
+
+
+<% else %>
+  <h1>Access denied</h1>
+<% end %>
 </div>
