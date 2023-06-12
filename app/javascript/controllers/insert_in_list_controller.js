@@ -4,8 +4,6 @@ export default class extends Controller {
   static targets = ["items", "form"]
   //Connect to insert-in-list
   connect() {
-    console.log(this.formTarget);
-    console.log(this.itemsTarget);
   }
 
 

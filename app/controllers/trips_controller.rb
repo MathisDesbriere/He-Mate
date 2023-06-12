@@ -10,22 +10,32 @@ class TripsController < ApplicationController
 
   def like
     @trip = Trip.find(params[:id])
-    if @trip.like == nil
+    if @trip.like.nil?
       @trip.like = 0
     else
       @trip.like += 1
     end
-    @trip.save
+
     skip_authorization
 
     respond_to do |format|
-      format.js { render json: { count: @trip.like } }
-      format.html do
-        session[:scroll_position] = params[:scroll_position]
-        redirect_back(fallback_location: root_path)
+      if @trip.save
+        format.html { redirect_to trips_path(@trip.like) }
+        format.json { render json: { count: @trip.like } }
+      else
+        format.html { render "trips/index", status: :unprocessable_entity }
+        format.json { render json: { error: "Failed to update like count" }, status: :unprocessable_entity }
       end
-      format.json { render json: { count: @trip.like } }
     end
+    # respond_to do |format|
+    # if @trip.save
+    #   format.js { render json: { count: @trip.like } }
+    #   format.html do
+    #     session[:scroll_position] = params[:scroll_position]
+    #     redirect_back(fallback_location: root_path)
+    #   end
+    #   format.json { render json: { count: @trip.like } }
+    # end
   end
 
   def user_trips
@@ -35,6 +45,7 @@ class TripsController < ApplicationController
     if user_signed_in?
       @user = current_user
       @trips = @user.trips
+      @comments = Comment.new
       authorize @trips
     else
       redirect_to new_user_session_path, notice: "Please sign in to view your trips."
@@ -43,7 +54,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
-    @comments = Comment.new
+    @comments = Comment.all
     authorize @trip
   end
 

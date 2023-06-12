@@ -94,22 +94,17 @@
               <% end %>
         </div>
 
-
-          <div class="card-trip-comments">
-          <%= render partial: 'comments/comment', collection: trip.comments %>
-          </div>
-
-          <div class="comment-bx">
-            <%= form_for Comment.new do |f| %>
-              <%= f.hidden_field :trip_id, value: trip.id %>
-                <div class="input-group">
-                  <%= f.text_field :content, placeholder: "Add comment here..." , class: "form-control post-comment"%>
-                  <div class="input-group-append">
-                    <%= f.submit "Post", class: "btn-post float-right" %>
-                  </div>
-                </div>
+      <div class="card-trip-comments"data-controller="insert-in-list">
+          <div data-insert-in-list-target="items">
+            <% trip.comments.each do |comment| %>
+              <%= render partial: 'comments/comment', locals: { comment: comment } %>
             <% end %>
           </div>
+          <div class="comment-box">
+            <%= render "comments/form",trip: trip, comment: @comments %>
+          </div>
+        </div>
+
 
       </div>
     </div>
