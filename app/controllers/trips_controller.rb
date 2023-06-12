@@ -1,41 +1,42 @@
 class TripsController < ApplicationController
+  after_action :verify_authorized, except: [:index, :user_trips], unless: :skip_pundit?
+  after_action :verify_policy_scoped, only: [:index, :user_trips], unless: :skip_pundit?
+
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :index, :new]
 
   def index
-    # @comments = Comment.where(trip_id: @trips.pluck(:id))
-
     @trips = policy_scope(Trip)
+    @comments = Comment.new
   end
 
   def like
     @trip = Trip.find(params[:id])
-    if @trip.like == nil
-      @trip.like = 0
-    else
-      @trip.like += 1
-    end
-    @trip.save
+    @trip.like ||= 0
+    @trip.like += params[:count].to_i
+
     skip_authorization
 
     respond_to do |format|
-      format.js { render json: { count: @trip.like } }
-      format.html do
-        session[:scroll_position] = params[:scroll_position]
-        redirect_back(fallback_location: root_path)
+      if @trip.save
+        format.html { redirect_to trips_path(@trip.like) }
+        format.json { render json: { count: @trip.like } }
+      else
+        format.html { render "trips/index", status: :unprocessable_entity }
+        format.json { render json: { error: "Failed to update like count" }, status: :unprocessable_entity }
       end
-      format.json { render json: { count: @trip.like } }
     end
   end
 
   def user_trips
+    @trips = policy_scope(Trip)
     @user = User.find(params[:id])
     @comments = Comment.all
 
     if user_signed_in?
       @user = current_user
-      @trips = @user.trips
-      authorize @trips
+      @trips = policy_scope(Trip, policy_scope_class: TripPolicy::UserTripsScope)
+      @comments = Comment.new
     else
       redirect_to new_user_session_path, notice: "Please sign in to view your trips."
     end
@@ -62,7 +63,7 @@ class TripsController < ApplicationController
       @marker = Marker.new(address: params[:other][:address], trip: @trip)
       @marker.save!
       if @marker.latitude.present? && @marker.longitude.present?
-        redirect_to @trip, notice: "Trip was successfully created."
+        redirect_to trips_path, notice: "Trip was successfully created."
       else
         redirect_to new_trip_path, notice: "We couldn't localize your place."
       end
@@ -77,17 +78,13 @@ class TripsController < ApplicationController
 
   def update
     @trip.update(trip_params)
-    redirect_to trip_path(@trip)
+    redirect_to user_trips_path(current_user)
     authorize @trip #line must be at the end of the method WARNING
   end
 
   def destroy
-
-    if @trip.comments.exists?
-      @trip.comments.destroy_all
-    end
+    @trip.comments.destroy_all if @trip.comments.exists?
     # @markers = Marker.where(trip_id: @trip.id)
-
     # if @markers.destroy_all
     if @trip.destroy
       redirect_to user_trips_path(@user), status: :see_other
@@ -104,7 +101,7 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:title, :user, :like, :description, images: [])
+    params.require(:trip).permit(:title, :user, :count, :like, :description, images: [])
   end
 
   def set_trip

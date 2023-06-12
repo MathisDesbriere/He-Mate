@@ -7,6 +7,7 @@
         </div>
       <% end %>
     </div>
+  </div>
 
     <div class="nav-item nav-profile">
       <%= link_to user_path(current_user), class: "nav-content" do %>
@@ -14,18 +15,28 @@
           <h2>My profile</h2>
         </div>
       <% end %>
+
     </div>
   </div>
-
-    <%= image_tag @user.image.url, class: "avatar-bordered" %>
-
-    <%= @user.first_name %>
-    <%= @user.last_name %>
+</div>
 
 
 
+  <h1><%= @user.first_name + " " + @user.last_name %></h1>
 
-  <% else %>
-    <h1>Access denied</h1>
-  <% end %>
+
+<%= image_tag @user.image.url, class: "avatar-bordered" %>
+<br>
+<p>Edit my info:</p>
+
+
+<%= link_to edit_registration_path(current_user), class: "button-profile-edt" do %>
+  <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
+<% end %>
+
+
+
+<% else %>
+  <h1>Access denied</h1>
+<% end %>
 </div>

@@ -18,3 +18,6 @@ application.register("map", MapController)
 
 import PicturesActivitiesController from "./pictures_activities_controller"
 application.register("pictures-activities", PicturesActivitiesController)
+
+import InsertInListController from "./insert_in_list_controller"
+application.register("insert-in-list", InsertInListController)
