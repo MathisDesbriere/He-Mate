@@ -1,3 +1,68 @@
-<% @activities.each do |activity| %>
-  <p><%= activity.title  %></p>
+<% if @user == current_user %>
+  <div class="user-profile-navbar">
+    <div class="nav-item">
+      <%= link_to new_marker_path, class: "nav-content" do %>
+        <h2>Search</h2>
+      <% end %>
+    </div>
+
+    <div class="nav-item nav-trips">
+      <%= link_to activities_path, class: "nav-content" do %>
+        <h2>My activities</h2>
+      <% end %>
+    </div>
+  </div>
+
+  <div>
+    <section class="articles">
+      <% @activities.each do |activity| %>
+        <article data-controller="pictures-activities">
+          <div class="article-body">
+            <h4><b><%= activity.title %></b></h4>
+            <% if activity.first_picture.present? %>
+              <div class="display-pic">
+                <div data-action="click->pictures-activities#toggle">
+                  <div data-pictures-activities-target="plus">
+                    <i class="fa-solid fa-plus fa-lg"></i>
+                  </div>
+                  <div data-pictures-activities-target="minus" class="d-none">
+                    <i class="fa-solid fa-minus fa-lg"></i>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <%= link_to activity.address, "http://maps.google.com/?q=#{activity.title}, #{activity.address}", target: "_blank" %>
+          </div>
+          <div class="article-wrapper">
+            <div id="carousel-<%= activity.id %>" class="carousel slide">
+              <div class="carousel-inner">
+                <div class="d-none" data-pictures-activities-target="pictures">
+                  <% if activity.first_picture.present? %>
+                    <div class="carousel-item active">
+                      <%= image_tag activity.first_picture %>
+                    </div>
+                  <% end %>
+                  <% if activity.second_picture.present? %>
+                    <div class="carousel-item">
+                      <%= image_tag activity.second_picture %>
+                    </div>
+                  <% end %>
+                </div>
+                <% if activity.first_picture.present? && activity.second_picture.present? %>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= activity.id %>" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= activity.id %>" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </article>
+      <% end %>
+    </section>
+  </div>
 <% end %>

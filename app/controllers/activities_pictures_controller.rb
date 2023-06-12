@@ -1,0 +1,2 @@
+class ActivitiesPicturesController < ApplicationController
+end

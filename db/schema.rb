@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_11_073144) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_024521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,9 +50,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_073144) do
     t.bigint "marker_id"
     t.string "address"
     t.integer "attraction_id"
-    t.string "picture"
+    t.string "first_picture"
+    t.string "second_picture"
+    t.bigint "user_id", null: false
     t.index ["marker_id"], name: "index_activities_on_marker_id"
     t.index ["trip_id"], name: "index_activities_on_trip_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -104,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_11_073144) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "markers"
   add_foreign_key "activities", "trips"
+  add_foreign_key "activities", "users"
   add_foreign_key "comments", "trips"
   add_foreign_key "comments", "users"
   add_foreign_key "markers", "trips"

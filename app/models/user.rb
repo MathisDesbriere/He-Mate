@@ -4,8 +4,8 @@ class User < ApplicationRecord
   has_one_attached :image
   has_many :trips
   has_many :comments
+  has_many :activities
   validates :image, presence: true
-
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
