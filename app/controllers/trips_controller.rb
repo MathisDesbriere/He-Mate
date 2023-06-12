@@ -35,7 +35,9 @@ class TripsController < ApplicationController
     if user_signed_in?
       @user = current_user
       @trips = @user.trips
+      @comments = Comment.new
       authorize @trips
+
     else
       redirect_to new_user_session_path, notice: "Please sign in to view your trips."
     end
@@ -77,17 +79,13 @@ class TripsController < ApplicationController
 
   def update
     @trip.update(trip_params)
-    redirect_to trip_path(@trip)
+    redirect_to user_trips_path(current_user)
     authorize @trip #line must be at the end of the method WARNING
   end
 
   def destroy
-
-    if @trip.comments.exists?
-      @trip.comments.destroy_all
-    end
+    @trip.comments.destroy_all if @trip.comments.exists?
     # @markers = Marker.where(trip_id: @trip.id)
-
     # if @markers.destroy_all
     if @trip.destroy
       redirect_to user_trips_path(@user), status: :see_other
