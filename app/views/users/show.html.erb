@@ -8,7 +8,8 @@
 
     <div class="nav-item nav-profile">
       <div class="nav-content">
-        <h2><%= link_to 'My profile', user_path(current_user) %></h2>
+        <h2><%= link_to 'My profile', edit_registration_path(current_user) %></h2>
+        <%# <%= render partial: "edit"  %>
       </div>
     </div>
   </div>
@@ -19,8 +20,6 @@
 
     <%= @user.first_name %>
     <%= @user.last_name %>
-
-
 
 
   <% else %>
