@@ -47,7 +47,7 @@
                 <% end %>
               </div>
             <% end %>
-
+          <% end %>
             <% trip.images.each_with_index do |image, i| %>
               <%= link_to trip_path(trip) do %>
                 <div class="carousel-item<%= " active" if i == 0 %>">
