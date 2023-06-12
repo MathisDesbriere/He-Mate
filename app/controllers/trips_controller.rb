@@ -10,11 +10,8 @@ class TripsController < ApplicationController
 
   def like
     @trip = Trip.find(params[:id])
-    if @trip.like.nil?
-      @trip.like = 0
-    else
-      @trip.like += 1
-    end
+    @trip.like ||= 0
+    @trip.like += params[:count].to_i
 
     skip_authorization
 
@@ -27,15 +24,6 @@ class TripsController < ApplicationController
         format.json { render json: { error: "Failed to update like count" }, status: :unprocessable_entity }
       end
     end
-    # respond_to do |format|
-    # if @trip.save
-    #   format.js { render json: { count: @trip.like } }
-    #   format.html do
-    #     session[:scroll_position] = params[:scroll_position]
-    #     redirect_back(fallback_location: root_path)
-    #   end
-    #   format.json { render json: { count: @trip.like } }
-    # end
   end
 
   def user_trips
@@ -115,7 +103,7 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:title, :user, :like, :description, images: [])
+    params.require(:trip).permit(:title, :user, :count, :like, :description, images: [])
   end
 
   def set_trip

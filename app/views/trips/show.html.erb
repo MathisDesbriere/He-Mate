@@ -19,11 +19,15 @@
         <% end %>
 
       </div>
-      <div class= "show-card-trip-like">
-        <h2> <%= @trip.like %> <i class="fa-solid fa-heart"></i> </h2>
-      </div>
-    </div>
- <div class="card-trip-comments"data-controller="insert-in-list">
+
+        <div class="card-trip-like" data-controller="like" data-trip-id="<%= @trip.id %>">
+          <h2 data-like-target="likeCount"><%= @trip.like %></h2>
+          <%= link_to like_trip_path(@trip), method: :post, class: 'like-link', data: { trip_id: @trip.id, action: "click->like#like" }, remote: true  do %>
+            <i data-like-target="likeIcon" class="fa-regular fa-heart"></i>
+          <% end %>
+        </div>
+
+      <div class="card-trip-comments"data-controller="insert-in-list">
           <div data-insert-in-list-target="items">
             <% @trip.comments.each do |comment| %>
               <%= render partial: 'comments/comment', locals: { comment: comment } %>
