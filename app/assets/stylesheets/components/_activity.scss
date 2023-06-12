@@ -14,6 +14,14 @@
   align-items: center;
 }
 
+article:first-of-type {
+  margin-top: 30px;
+}
+
+article:last-of-type {
+  margin-bottom: 30px;
+}
+
 
 article {
   --img-scale: 1.001;
