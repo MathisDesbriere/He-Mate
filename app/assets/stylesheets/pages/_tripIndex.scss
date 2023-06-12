@@ -57,12 +57,32 @@
   position: relative;
 }
 
+.card-trip .show-card-trip-user{
+  position: absolute;
+  right: 10px;
+  top: -20px;
+  width: 40px;
+  white-space: nowrap;
+  text-align: center;
+}
+
 .avatar-bordered {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   border: white 1px solid;
+}
+
+.card-trip-like {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  column-gap: 10px;
+}
+
+.card-trip-like h2 {
+  margin-top: 2px;
 }
 
 .card-trip-details {

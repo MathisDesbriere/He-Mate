@@ -8,6 +8,7 @@
           <% end %>
       </div>
 
+
       <% if trip.images.any? %>
         <div class="carousel-inner">
           <div id="carouselExampleIndicators<%= index %>" class="carousel slide">
@@ -46,10 +47,19 @@
         <% end %>
       <% end %>
 
+
+
       <div class="card-trip-infos">
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
           <p>Description: <%= trip.description %></p>
+        <div class="show-card-trip-user">
+        <% if trip.user.image.present? %>
+          <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
+        <% else %>
+        <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
+        <% end %>
+        </div>
 
 
           <% if trip.marker %>
