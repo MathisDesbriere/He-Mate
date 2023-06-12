@@ -1,11 +1,13 @@
 class TripsController < ApplicationController
+  after_action :verify_authorized, except: [:index, :user_trips], unless: :skip_pundit?
+  after_action :verify_policy_scoped, only: [:index, :user_trips], unless: :skip_pundit?
+
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:show, :index, :new]
 
   def index
     @trips = policy_scope(Trip)
     @comments = Comment.new
-
   end
 
   def like
@@ -27,15 +29,14 @@ class TripsController < ApplicationController
   end
 
   def user_trips
+    @trips = policy_scope(Trip)
     @user = User.find(params[:id])
     @comments = Comment.all
 
     if user_signed_in?
       @user = current_user
-      @trips = @user.trips
+      @trips = policy_scope(Trip, policy_scope_class: TripPolicy::UserTripsScope)
       @comments = Comment.new
-      authorize @trips
-
     else
       redirect_to new_user_session_path, notice: "Please sign in to view your trips."
     end
