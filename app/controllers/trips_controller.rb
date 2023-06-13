@@ -61,10 +61,10 @@ class TripsController < ApplicationController
     @trip.user = current_user
     authorize @trip
     if @trip.save
-      @marker = Marker.new(address: params[:other][:address], trip: @trip)
+      @marker = Marker.new(address: params[:other][:address], trip: @trip, user: current_user)
       @marker.save!
       if @marker.latitude.present? && @marker.longitude.present?
-        redirect_to trips_path, notice: "Trip was successfully created."
+        redirect_to new_activity_path(marker: @marker, trip: @trip, lat: @marker.latitude, long: @marker.longitude)
       else
         redirect_to new_trip_path, notice: "We couldn't localize your place."
       end
@@ -102,7 +102,7 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:title, :user, :count, :like, :description, images: [])
+    params.require(:trip).permit(:title, :user, :count, :like, :description, :start_date, :end_date, images: [])
   end
 
   def set_trip

@@ -14,6 +14,18 @@ class MarkersController < ApplicationController
     end
   end
 
+  def show
+    @markers = policy_scope(Marker)
+    @coordinates = @markers.where.not(trip_id: nil).geocoded.map do |marker|
+      {
+        lat: marker.latitude,
+        lng: marker.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { marker: marker }),
+        marker_html: render_to_string(partial: "marker", locals: { marker: marker })
+      }
+    end
+  end
+
   def new
     @marker = Marker.new
     authorize @marker #line must be at the end of the method WARNING
@@ -21,6 +33,8 @@ class MarkersController < ApplicationController
 
   def create
     @marker = Marker.new(marker_params)
+    @marker.user = current_user
+    authorize @marker
     if @marker.save
       if @marker.latitude.present? && @marker.longitude.present?
         redirect_to new_activity_path(marker: @marker, lat: @marker.latitude, long: @marker.longitude)
@@ -30,7 +44,6 @@ class MarkersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-    authorize @marker #line must be at the end of the method WARNING
   end
 
   def destroy
@@ -45,7 +58,7 @@ class MarkersController < ApplicationController
   private
 
   def marker_params
-    params.require(:marker).permit(:longitude, :latitude, :address)
+    params.require(:marker).permit(:longitude, :latitude, :address, :user)
   end
 
   def set_marker

@@ -1,2 +1,0 @@
-class ActivitiesPicturesController < ApplicationController
-end

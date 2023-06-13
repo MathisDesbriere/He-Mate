@@ -7,8 +7,14 @@ import { application } from "./application"
 import AddressAutocompleteController from "./address_autocomplete_controller"
 application.register("address-autocomplete", AddressAutocompleteController)
 
+import FlatpickrController from "./flatpickr_controller"
+application.register("flatpickr", FlatpickrController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import InsertInListController from "./insert_in_list_controller"
+application.register("insert-in-list", InsertInListController)
 
 import LikeController from "./like_controller"
 application.register("like", LikeController)
@@ -18,6 +24,3 @@ application.register("map", MapController)
 
 import PicturesActivitiesController from "./pictures_activities_controller"
 application.register("pictures-activities", PicturesActivitiesController)
-
-import InsertInListController from "./insert_in_list_controller"
-application.register("insert-in-list", InsertInListController)
