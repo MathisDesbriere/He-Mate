@@ -112,6 +112,28 @@
 }
 
 
+.button-profile-log-out {
+  background: #FFFFFF;
+  border-radius: 999px;
+  box-shadow: #FFFFFF 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 0.8;
+  outline: 0 solid transparent;
+  padding: 6px 12px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  right: 0;
+  word-break: break-word;
+  border: 0;
+}
+
 .button-profile-edt {
   background: #0B8D93;
   border-radius: 999px;
