@@ -1,28 +1,65 @@
 <%= simple_form_for activity do |f| %>
-  <% @attractions.each do |attraction| %>
-    <%= f.fields_for "activities[#{attraction['location_id']}]" do |activity_fields| %>
-      <label>
-        <%= activity_fields.check_box :selected %>
-        <b><%= attraction['name'] %></b>
-      </label>
-      <p><%= link_to attraction['address_obj']['address_string'], "http://maps.google.com/?q=#{attraction['name']} #{attraction['address_obj']['address_string']}", target: "_blank" %></p>
-
-      <%= activity_fields.hidden_field :name, value: attraction['name'] %>
-      <%= activity_fields.hidden_field :address, value: attraction['address_obj']['address_string'] %>
-      <%= activity_fields.hidden_field :marker, value: @marker %>
+  <section class="articles">
+    <% @attractions.each do |attraction| %>
       <% pictures = JSON.parse(pictures_tripadvisor(attraction['location_id']))['data'] %>
-      <% if pictures.present? %>
-        <% pictures.first(2).each_with_index do |picture, index| %>
-          <% if picture['images']['large'] %>
-            <% picture_field_name = "picture_#{index + 1}".to_sym %>
-            <%= activity_fields.hidden_field picture_field_name, value: picture['images']['large']['url'] %>
-            <div class="activity-picture">
-              <%= image_tag picture['images']['large']['url'], class: 'medium-picture' %>
+      <article data-controller="pictures-activities">
+        <%= f.fields_for "activities[#{attraction['location_id']}]" do |activity_fields| %>
+          <div class="article-body">
+            <label>
+              <%= activity_fields.check_box :selected %>
+            </label>
+            <h4><b><%= attraction['name'] %></b></h4>
+            <% if pictures.present? %>
+              <div class="display-pic">
+                <div data-action="click->pictures-activities#toggle">
+                  <div data-pictures-activities-target="plus">
+                    <i class="fa-solid fa-plus fa-lg"></i>
+                  </div>
+                  <div data-pictures-activities-target="minus" class="d-none">
+                    <i class="fa-solid fa-minus fa-lg"></i>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <%= link_to attraction['address_obj']['address_string'], "http://maps.google.com/?q=#{attraction['name']} #{attraction['address_obj']['address_string']}", target: "_blank" %>
+          </div>
+          <div class="article-wrapper">
+            <div class="display-pic">
+              <% if pictures.present? %>
+                <div class="d-none" data-pictures-activities-target="pictures">
+                  <div id="carousel-<%= attraction['location_id'] %>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <% pictures.first(2).each_with_index do |picture, index| %>
+                        <% if picture['images']['large'] %>
+                          <% picture_field_name = "picture_#{index + 1}".to_sym %>
+                          <%= activity_fields.hidden_field picture_field_name, value: picture['images']['large']['url'] %>
+                          <div class="carousel-item <%= 'active' if index == 0 %>">
+                            <%= image_tag picture['images']['large']['url'], class: 'medium-picture' %>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <% if pictures.size > 1 %>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= attraction['location_id'] %>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= attraction['location_id'] %>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          <% end %>
+          </div>
+            <%= activity_fields.hidden_field :name, value: attraction['name'] %>
+            <%= activity_fields.hidden_field :address, value: attraction['address_obj']['address_string'] %>
+            <%= activity_fields.hidden_field :marker, value: @marker %>
         <% end %>
-      <% end %>
+      </article>
     <% end %>
-  <% end %>
-  <%= f.button :submit, class: 'button', value: 'Submit' %>
+    <%= f.button :submit, class: 'button', value: 'Submit' %>
+  </section>
 <% end %>

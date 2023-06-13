@@ -2,42 +2,39 @@
   <div class="user-profile-navbar">
     <div class="nav-item">
       <%= link_to user_trips_path(current_user), class: "nav-content" do %>
-        <div class="nav-content">
-          <h2>Your Trips</h2>
-        </div>
+        <h2>My Trips</h2>
       <% end %>
     </div>
-  </div>
 
-    <div class="nav-item nav-profile">
+    <div class="nav-item nav-trips" >
       <%= link_to user_path(current_user), class: "nav-content" do %>
-        <div class="nav-content">
-          <h2>My profile</h2>
-        </div>
+        <h2>My profile</h2>
       <% end %>
-
     </div>
   </div>
-</div>
+
 <p> <%= @following_count %>Following</p>
 <p><%= @follower_count %>Follower</p>
 
+  <div class="my-profile-container">
+    <div class="img-ctnr">
+      <%= image_tag("bg-my-profile.jpeg", class: "mp-bg", alt: "bg-img-myprofile")%>
+      <%= image_tag @user.image.url, class: "mp-avatar-bordered" %>
+    </div>
 
-  <h1><%= @user.first_name + " " + @user.last_name %></h1>
+    <div class="my-profile-infos">
+      <h1><%= @user.first_name + " " + @user.last_name %></h1>
 
+      <br>
+      <p>Edit my info:</p>
 
-<%= image_tag @user.image.url, class: "avatar-bordered" %>
-<br>
-<p>Edit my info:</p>
+      <%= link_to edit_registration_path(current_user), class: "button-profile-edt" do %>
+        <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
 
-
-<%= link_to edit_registration_path(current_user), class: "button-profile-edt" do %>
-  <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
-<% end %>
-
-
+      <% end %>
+    </div>
+  </div>
 
 <% else %>
   <h1>Access denied</h1>
 <% end %>
-</div>
