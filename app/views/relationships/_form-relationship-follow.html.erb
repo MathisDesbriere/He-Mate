@@ -1,5 +1,8 @@
 <div>
   <%= simple_form_for(@follow, url: "/relationships/follow_user/#{user.id}") do |f| %>
-    <%= f.submit "Follow", class: 'btn unfollow-button' %>
+    <%= f.submit "Follow", class: 'follow-button' do %>
+    <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+    <% end %>
   <% end %>
+
 </div>

@@ -91,7 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_073809) do
   create_table "trips", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
-    t.integer "like", default: 0
+    t.integer "like"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
