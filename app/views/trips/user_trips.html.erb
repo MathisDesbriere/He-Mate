@@ -30,7 +30,7 @@
 
 
       <div class="card-trip-title">
-        <%= link_to user_trips_path(trip.user), class: "card-trip-user-name-link" do %>
+        <%= link_to user_path(@user), class: "card-trip-user-name-link" do %>
           <p class="card-trip-user-name"><%= trip.user.first_name %></p>
         <% end %>
       </div>
@@ -108,4 +108,3 @@
   <% else %>
   <h1>You are not authorized.</h1>
   <% end %>
-
