@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :trips
   has_many :comments
   has_many :activities
+  has_many :markers
   validates :image, presence: true
 
   devise :database_authenticatable, :registerable,

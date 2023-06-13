@@ -33,6 +33,8 @@ class MarkersController < ApplicationController
 
   def create
     @marker = Marker.new(marker_params)
+    @marker.user = current_user
+    authorize @marker
     if @marker.save
       if @marker.latitude.present? && @marker.longitude.present?
         redirect_to new_activity_path(marker: @marker, lat: @marker.latitude, long: @marker.longitude)
@@ -42,7 +44,6 @@ class MarkersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-    authorize @marker #line must be at the end of the method WARNING
   end
 
   def destroy
@@ -57,7 +58,7 @@ class MarkersController < ApplicationController
   private
 
   def marker_params
-    params.require(:marker).permit(:longitude, :latitude, :address)
+    params.require(:marker).permit(:longitude, :latitude, :address, :user)
   end
 
   def set_marker

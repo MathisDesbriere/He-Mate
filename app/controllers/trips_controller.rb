@@ -60,7 +60,7 @@ class TripsController < ApplicationController
     @trip.user = current_user
     authorize @trip
     if @trip.save
-      @marker = Marker.new(address: params[:other][:address], trip: @trip)
+      @marker = Marker.new(address: params[:other][:address], trip: @trip, user: current_user)
       @marker.save!
       if @marker.latitude.present? && @marker.longitude.present?
         redirect_to new_activity_path(marker: @marker, trip: @trip, lat: @marker.latitude, long: @marker.longitude)
