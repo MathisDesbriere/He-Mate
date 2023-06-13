@@ -63,7 +63,7 @@ class TripsController < ApplicationController
       @marker = Marker.new(address: params[:other][:address], trip: @trip)
       @marker.save!
       if @marker.latitude.present? && @marker.longitude.present?
-        redirect_to trips_path, notice: "Trip was successfully created."
+        redirect_to new_activity_path(marker: @marker, trip: @trip, lat: @marker.latitude, long: @marker.longitude)
       else
         redirect_to new_trip_path, notice: "We couldn't localize your place."
       end

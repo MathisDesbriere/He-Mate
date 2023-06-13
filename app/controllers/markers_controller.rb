@@ -14,6 +14,18 @@ class MarkersController < ApplicationController
     end
   end
 
+  def show
+    @markers = policy_scope(Marker)
+    @coordinates = @markers.where.not(trip_id: nil).geocoded.map do |marker|
+      {
+        lat: marker.latitude,
+        lng: marker.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { marker: marker }),
+        marker_html: render_to_string(partial: "marker", locals: { marker: marker })
+      }
+    end
+  end
+
   def new
     @marker = Marker.new
     authorize @marker #line must be at the end of the method WARNING

@@ -1,0 +1,151 @@
+<%= simple_form_for activity do |f| %>
+  <section class="articles">
+    <% @attractions.each do |attraction| %>
+      <article data-controller="pictures-activities" class="margin">
+        <%= f.fields_for "activities[#{attraction['location_id']}]", OpenStruct.new(attraction) do |activity_fields| %>
+          <div class="article-body">
+            <div class="flex">
+              <label class="box-activity">
+                <%= activity_fields.check_box :selected %>
+              </label>
+              <h4><b><%= attraction['name'] %></b></h4>
+            </div>
+            <%= link_to attraction['address_obj']['address_string'], "http://maps.google.com/?q=#{attraction['name']} #{attraction['address_obj']['address_string']}", target: "_blank" %>
+            <% if attraction['pictures'] && attraction['pictures'].any? { |picture| picture['images']['large'] } %>
+              <div class="display-pic">
+                <div data-action="click->pictures-activities#toggle">
+                  <div data-pictures-activities-target="plus">
+                    <i class="fa-solid fa-plus fa-lg"></i>
+                  </div>
+                  <div data-pictures-activities-target="minus" class="d-none">
+                    <i class="fa-solid fa-minus fa-lg"></i>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="article-wrapper">
+            <% if attraction['pictures'] && attraction['pictures'].any? { |picture| picture['images']['large'] } %>
+              <div class="d-none" data-pictures-activities-target="pictures-<%= attraction['location_id'] %>">
+                <div id="carousel-<%= attraction['location_id'] %>" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <% attraction['pictures'].first(2).each_with_index do |picture, index| %>
+                      <% if picture['images']['large'] %>
+                        <% picture_field_name = "activities[#{attraction['location_id']}][picture_#{index + 1}]".to_sym %>
+                        <%= activity_fields.hidden_field picture_field_name, value: picture['images']['large']['url'] %>
+                        <div class="carousel-item <%= 'active' if index == 0 %>">
+                          <%= image_tag picture['images']['large']['url'], class: 'medium-picture' %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <% if attraction['pictures'].size > 1 %>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= attraction['location_id'] %>" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= attraction['location_id'] %>" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <%= activity_fields.hidden_field :name, value: attraction['name'] %>
+          <%= activity_fields.hidden_field :address, value: attraction['address_obj']['address_string'] %>
+        <% end %>
+      </article>
+    <% end %>
+    <%= f.hidden_field :marker, value: params[:marker] %>
+    <%= f.hidden_field :trip, value: params[:trip] %>
+    <%= f.button :submit, class: 'button activity-btn', value: 'Submit' %>
+  </section>
+<% end %>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var attractions = <%= raw @attractions.to_json %>;
+
+    attractions.forEach(function(attraction) {
+      var picturesContainer = document.querySelector('[data-pictures-activities-target="pictures-' + attraction['location_id'] + '"]');
+      var carouselId = 'carousel-' + attraction['location_id'];
+      var carouselInner = document.createElement('div');
+
+      carouselInner.className = 'carousel-inner';
+
+      fetchPictures(attraction['location_id'])
+        .then(function(data) {
+          attraction['pictures'] = data;
+
+          data.forEach(function(picture, index) {
+            if (picture['images']['large']) {
+              var pictureField = document.createElement('input');
+              var carouselItem = document.createElement('div');
+              var pictureElement = document.createElement('img');
+
+              pictureField.type = 'hidden';
+              pictureField.name = 'activities[' + attraction['location_id'] + '][picture_' + (index + 1) + ']';
+              pictureField.value = picture['images']['large']['url'];
+
+              carouselItem.className = 'carousel-item';
+              if (index === 0) {
+                carouselItem.classList.add('active');
+              }
+
+              pictureElement.className = 'medium-picture';
+              pictureElement.src = picture['images']['large']['url'];
+
+              carouselItem.appendChild(pictureElement);
+              carouselInner.appendChild(carouselItem);
+              picturesContainer.appendChild(pictureField);
+            }
+          });
+
+          if (data.length > 1) {
+            var carouselPrevButton = document.createElement('button');
+            var carouselNextButton = document.createElement('button');
+            var carousel = document.createElement('div');
+
+            carouselPrevButton.className = 'carousel-control-prev';
+            carouselPrevButton.type = 'button';
+            carouselPrevButton.dataset.bsTarget = '#' + carouselId;
+            carouselPrevButton.dataset.bsSlide = 'prev';
+            carouselPrevButton.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>';
+
+            carouselNextButton.className = 'carousel-control-next';
+            carouselNextButton.type = 'button';
+            carouselNextButton.dataset.bsTarget = '#' + carouselId;
+            carouselNextButton.dataset.bsSlide = 'next';
+            carouselNextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>';
+
+            carousel.className = 'carousel slide';
+            carousel.id = carouselId;
+            carousel.dataset.bsRide = 'carousel';
+            carousel.appendChild(carouselInner);
+            carousel.appendChild(carouselPrevButton);
+            carousel.appendChild(carouselNextButton);
+            picturesContainer.appendChild(carousel);
+          }
+        })
+        .catch(function(error) {
+          console.error('Error fetching pictures:', error);
+        });
+    });
+  });
+
+  function fetchPictures(locationId) {
+    var api_key = '<%= ENV['TRIPADVISOR_API_KEY'] %>';
+    var url = `https://api.content.tripadvisor.com/api/v1/location/${locationId}/photos?key=${api_key}&language=en`;
+
+    return fetch(url)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        return data['data'];
+      });
+  }
+</script>

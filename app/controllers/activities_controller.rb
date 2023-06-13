@@ -17,7 +17,6 @@ class ActivitiesController < ApplicationController
     @attractions = JSON.parse(search_tripadvisor(params[:lat], params[:long]))
     @attractions = @attractions["data"]
     @activity = Activity.new
-    @marker = params[:marker]
     authorize @activity #line must be at the end of the method WARNING
   end
 
@@ -34,7 +33,8 @@ class ActivitiesController < ApplicationController
         address: attraction_details['address'],
         first_picture: attraction_details['picture_1'],
         second_picture: attraction_details['picture_2'],
-        marker: @marker
+        marker_id: params["activity"]["marker"],
+        trip_id: params["activity"]["trip"].present? ? params["activity"]["trip"] : nil
       )
 
       activity.user = current_user
@@ -49,9 +49,14 @@ class ActivitiesController < ApplicationController
     if has_errors
       render :new, status: :unprocessable_entity, notice: "An error occured."
     else
-      redirect_to activities_path, status: :see_other
+      if params["activity"]["trip"].present?
+        redirect_to trip_path(params["activity"]["trip"])
+      else
+        redirect_to activities_path, status: :see_other
+      end
     end
   end
+
 
   def edit
     authorize @edit
@@ -79,7 +84,7 @@ class ActivitiesController < ApplicationController
   end
 
   def set_activity
-    @activity = activity.find(params[:id])
+    @activity = Activity.find(params[:id])
   end
 
   def search_tripadvisor(lat, long)

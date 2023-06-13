@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = ['pictures', 'plus', 'minus']
 
   connect() {
-    console.log("hello")
   }
 
   toggle(event) {
