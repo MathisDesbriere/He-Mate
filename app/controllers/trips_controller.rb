@@ -8,6 +8,7 @@ class TripsController < ApplicationController
   def index
     @trips = policy_scope(Trip)
     @comments = Comment.new
+    @follow = Follow.new
   end
 
   def like
