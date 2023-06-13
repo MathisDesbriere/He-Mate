@@ -1,15 +1,16 @@
 <% if @user == current_user %>
+
   <div class="user-profile-navbar">
     <div class="nav-item nav-trips">
-      <div class="nav-content">
-        <h2><%= link_to 'My Trips', user_trips_path(current_user) %></h2>
-      </div>
+      <%= link_to user_trips_path(current_user), class: "nav-content" do %>
+        <h2>My Trips</h2>
+      <% end %>
     </div>
 
-    <div class="nav-item nav-profile">
-      <div class="nav-content">
-        <h2><%= link_to 'My profile', user_path(current_user) %></h2>
-      </div>
+    <div class="nav-item">
+      <%= link_to user_path(current_user), class: "nav-content" do %>
+        <h2>My Profile</h2>
+      <% end %>
     </div>
   </div>
 
@@ -104,10 +105,10 @@
         </div>
 
 
-       </div>
+        </div>
   <% end %>
 
 
-<% else %>
+  <% else %>
   <h1>You are not authorized.</h1>
-<% end %>
+  <% end %>
