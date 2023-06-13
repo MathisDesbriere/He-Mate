@@ -22,12 +22,17 @@
       <h1><%= @user.first_name + " " + @user.last_name %></h1>
 
       <br>
-      <p>Edit my info:</p>
-
+      <p>Edit my info :</p>
       <%= link_to edit_registration_path(current_user), class: "button-profile-edt" do %>
-        <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
-
+        <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i><br>
       <% end %>
+
+      <br>
+      <p>Need a break ?</p>
+      <%= link_to destroy_user_session_path, method: :delete, class: "button-profile-log-out" do %>
+      <i class="fa-solid fa-right-from-bracket" style="color: #ee9c22;"></i>
+      <% end %>
+
     </div>
   </div>
 
