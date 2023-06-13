@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_12_024521) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_13_000731) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,6 +69,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_024521) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "follows", force: :cascade do |t|
+    t.integer "following_id", null: false
+    t.integer "follower_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "markers", force: :cascade do |t|
     t.float "longitude"
     t.float "latitude"
@@ -82,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_024521) do
   create_table "trips", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
-    t.integer "like"
+    t.integer "like", default: 0
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

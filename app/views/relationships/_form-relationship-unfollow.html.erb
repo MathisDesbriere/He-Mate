@@ -1,0 +1,5 @@
+<div>
+<%= simple_form_for(@follow, url: "/relationships/unfollow_user/#{user.id}") do |f| %>
+    <%= f.submit "Unfollow", class: 'btn unfollow-button' %>
+  <% end %>
+</div>

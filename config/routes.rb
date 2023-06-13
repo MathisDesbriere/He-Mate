@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'relationships/follow_user'
+  get 'relationships/unfollow_user'
   resources :comments
   devise_for :users
   root to: "trips#index"
@@ -9,6 +11,9 @@ Rails.application.routes.draw do
   get '/users/:id', to: 'users#show', as: 'user'
   get '/users/:id/edit', to: 'users#edit'
   get 'users/:id/trips', to: 'trips#user_trips', as: 'user_trips'
+
+  post '/relationships/follow_user/:id', to: 'relationships#follow_user', as: :follow_user
+  post '/relationships/unfollow_user/:id', to: 'relationships#unfollow_user', as: :unfollow_user
 
   resources :trips do
     resources :markers, only: [:new, :create]
