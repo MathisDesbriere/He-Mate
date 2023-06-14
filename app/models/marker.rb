@@ -1,4 +1,5 @@
 class Marker < ApplicationRecord
+  belongs_to :user, optional: true
   belongs_to :trip, optional: true
   has_many :activities
   geocoded_by :address

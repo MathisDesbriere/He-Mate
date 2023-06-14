@@ -2,13 +2,16 @@
   <section class="articles">
     <% @attractions.each do |attraction| %>
       <% pictures = JSON.parse(pictures_tripadvisor(attraction['location_id']))['data'] %>
-      <article data-controller="pictures-activities">
+      <article data-controller="pictures-activities" class="margin">
         <%= f.fields_for "activities[#{attraction['location_id']}]" do |activity_fields| %>
           <div class="article-body">
-            <label>
-              <%= activity_fields.check_box :selected %>
-            </label>
-            <h4><b><%= attraction['name'] %></b></h4>
+            <div class="flex">
+              <label class="box-activity">
+                <%= activity_fields.check_box :selected %>
+              </label>
+              <h4 class="activity-title"><b><%= attraction['name'] %></b></h4>
+            </div>
+            <%= link_to attraction['address_obj']['address_string'], "http://maps.google.com/?q=#{attraction['name']} #{attraction['address_obj']['address_string']}", target: "_blank" %>
             <% if pictures.present? %>
               <div class="display-pic">
                 <div data-action="click->pictures-activities#toggle">
@@ -21,10 +24,8 @@
                 </div>
               </div>
             <% end %>
-            <%= link_to attraction['address_obj']['address_string'], "http://maps.google.com/?q=#{attraction['name']} #{attraction['address_obj']['address_string']}", target: "_blank" %>
           </div>
           <div class="article-wrapper">
-            <div class="display-pic">
               <% if pictures.present? %>
                 <div class="d-none" data-pictures-activities-target="pictures">
                   <div id="carousel-<%= attraction['location_id'] %>" class="carousel slide" data-bs-ride="carousel">
@@ -52,14 +53,14 @@
                   </div>
                 </div>
               <% end %>
-            </div>
           </div>
             <%= activity_fields.hidden_field :name, value: attraction['name'] %>
             <%= activity_fields.hidden_field :address, value: attraction['address_obj']['address_string'] %>
-            <%= activity_fields.hidden_field :marker, value: @marker %>
         <% end %>
       </article>
     <% end %>
-    <%= f.button :submit, class: 'button', value: 'Submit' %>
+      <%= f.hidden_field :marker, value: params[:marker] %>
+      <%= f.hidden_field :trip, value: params[:trip] %>
+    <%= f.button :submit, class: 'button activity-btn', value: 'Submit' %>
   </section>
 <% end %>

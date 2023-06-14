@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :comments
   has_many :activities
   has_many :markers
+
   validates :image, presence: true
 
   has_many :follower_relationships, foreign_key: :following_id, class_name: 'Follow'

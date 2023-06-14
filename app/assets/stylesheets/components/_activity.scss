@@ -1,3 +1,6 @@
+.activity-title {
+  font-family: "Nunito";
+}
 .activity-picture {
   text-align: center;
   margin: 10px;
@@ -8,11 +11,40 @@
   border: 2px solid rgb(220, 219, 219);
 }
 
+.activity-btn {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
 .display-pic {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
+
+.box-activity {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: right;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 5px;
+}
+
+.margin:first-of-type {
+  margin-top: 90px;
+}
+
+.margin:last-of-type {
+  margin-bottom: 0px;
+}
+
 
 article:first-of-type {
   margin-top: 30px;
@@ -21,6 +53,27 @@ article:first-of-type {
 article:last-of-type {
   margin-bottom: 30px;
 }
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex .box-activity {
+  order: 2;
+  margin-left: 10px;
+}
+
+.flex a {
+  order: 2;
+  margin-left: 10px
+}
+
+.flex h4 {
+  order: 1;
+}
+
 
 
 article {
@@ -56,7 +109,7 @@ figure {
 
 article img {
   width: 342px;
-  height: 200px; /* Ajustez cette valeur selon vos besoins */
+  height: 200px;
   object-fit: cover;
   object-position: center;
   transform-origin: center;

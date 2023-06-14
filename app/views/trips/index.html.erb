@@ -1,5 +1,4 @@
-
-  <% @trips.each_with_index do |trip, index| %>
+<% @trips.each_with_index do |trip, index| %>
     <div class="card-trip">
 
         <div class="card-trip-title">
@@ -15,6 +14,7 @@
               <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user, hidden_class: "" } %>
             <% end %>
           </div>
+
 
       </div>
 
@@ -61,7 +61,7 @@
       <div class="card-trip-infos">
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
-          <p>Description: <%= trip.description %></p>
+          <p><u>Description</u> : <%= trip.description %></p>
         <div class="show-card-trip-user">
         <% if trip.user.image.present? %>
           <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
@@ -72,16 +72,35 @@
 
 
           <% if trip.marker %>
-            <p>Address: <%= trip.marker.address %></p>
+            <p><u>Address</u> : <%= trip.marker.address %></p>
           <% else %>
             <p>Address not available</p>
           <% end %>
+
+          <% if trip.start_date.present? %>
+            <p><u>Starting date</u> : <%= trip.start_date %></p>
+          <% end %>
+
+           <% if trip.end_date.present? %>
+            <p><u>Ending date</u> : <%= trip.end_date %></p>
+          <% end %>
+
+
         </div>
 
+
+
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-          <h2 data-like-target="likeCount"><%= trip.likes.count %></h2>
-          <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { action: "click->like#like" }, remote: true  do %>
-            <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+
+          <h2 data-like-target="likeCount"><%= trip.like %></h2>
+          <% if user_signed_in? %>
+            <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
+              <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+            <% end %>
+          <% else %>
+            <%= link_to new_user_session_path do %>
+              <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+            <% end %>
           <% end %>
         </div>
 

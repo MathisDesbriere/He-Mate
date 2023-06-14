@@ -10,7 +10,14 @@ class Trip < ApplicationRecord
 
   validates :title, presence: true
   validates :description, length: { minimum: 5 }
+  validate :validate_dates
 
-  scope :of_followed_users, -> (following_users) { where(user_id: following_users) }
 
+  private
+
+  def validate_dates
+    return unless start_date && end_date
+
+    errors.add(:end_date, "must be after start date") if end_date <= start_date
+  end
 end

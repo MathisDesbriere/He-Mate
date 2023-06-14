@@ -21,6 +21,7 @@
   border: white 3px solid;
   margin-top: -115px;
   margin-left: 101px;
+  object-fit: cover;
 }
 
 .my-profile-infos {
@@ -33,6 +34,8 @@
   margin-left: 5%;
   margin-right: 5%;
   border-radius: 5%;
+  margin-bottom: 10%;
+
 }
 
 .my-profile-infos h1,
@@ -46,6 +49,5 @@
 }
 
 .my-profile-infos p {
-font-size: 22px;
-
+font-size: 18px;
 }
