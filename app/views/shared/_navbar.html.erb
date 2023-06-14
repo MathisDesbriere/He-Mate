@@ -1,7 +1,16 @@
 <nav>
   <div class="navbar">
-    <%= link_to root_path do %>
-      <%= image_tag("logo.png", alt: "logo", class: "navbar-logo") %>
-    <% end %>
+    <div class="navbar-logo-container">
+      <%= link_to root_path do %>
+        <%= image_tag("logo.png", alt: "logo", class: "navbar-logo") %>
+      <% end %>
+    </div>
+    <div class="message-icon-container">
+      <% if user_signed_in? %>
+        <%= link_to chatrooms_path do %>
+          <i class="fa-regular fa-comments fa-2xl message-icon" style="color: #0B8D93"></i>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </nav>
