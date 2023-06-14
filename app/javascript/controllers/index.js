@@ -24,3 +24,6 @@ application.register("map", MapController)
 
 import PicturesActivitiesController from "./pictures_activities_controller"
 application.register("pictures-activities", PicturesActivitiesController)
+
+import RelationshipController from "./relationship_controller"
+application.register("relationship", RelationshipController)

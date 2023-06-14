@@ -2,6 +2,7 @@ class Trip < ApplicationRecord
   belongs_to :user
   has_many :activities, dependent: :destroy
   has_many :markers, dependent: :destroy
+  has_many :likes
 
   has_many_attached :images
   has_many :comments
@@ -10,6 +11,7 @@ class Trip < ApplicationRecord
   validates :title, presence: true
   validates :description, length: { minimum: 5 }
   validate :validate_dates
+
 
   private
 

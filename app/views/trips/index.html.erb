@@ -1,15 +1,21 @@
 <% @trips.each_with_index do |trip, index| %>
     <div class="card-trip">
 
-      <div class="card-trip-title">
+        <div class="card-trip-title">
           <%= link_to user_trips_path(trip.user), class: "card-trip-user-name-link" do %>
             <p class="card-trip-user-name"><%= trip.user.first_name %></p>
           <% end %>
-           <% if trip.user.followers.include?(current_user) %>
-        <%= render partial: 'relationships/form-relationship-unfollow', locals: { user: trip.user } %>
-      <% else %>
-        <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user } %>
-      <% end %>
+          <div data-controller="relationship">
+            <% if trip.user.followers.include?(current_user) %>
+              <%= render partial: 'relationships/form-relationship-unfollow', locals: { user: trip.user, hidden_class: "" } %>
+              <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user, hidden_class: "d-none"} %>
+            <% else %>
+              <%= render partial: 'relationships/form-relationship-unfollow', locals: { user: trip.user, hidden_class: "d-none" } %>
+              <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user, hidden_class: "" } %>
+            <% end %>
+          </div>
+
+
       </div>
 
       <% if trip.images.any? %>
@@ -85,6 +91,7 @@
 
 
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
+
           <h2 data-like-target="likeCount"><%= trip.like %></h2>
           <% if user_signed_in? %>
             <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
