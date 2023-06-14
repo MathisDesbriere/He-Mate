@@ -15,13 +15,20 @@ class TripsController < ApplicationController
     @comments = Comment.new
     @follow = Follow.new
     @user = current_user
+
+
+    @address = params[:address]
+    if @address.present?
+      @latitude, @longitude = Geocoder.coordinates(@address)
+      @markers = Marker.near([@latitude, @longitude], 35)
+      @trips = @markers.includes(:trip).map(&:trip).uniq
+    end
   end
 
   def like
     @trip = Trip.find(params[:id])
     @like = @trip.likes.build(user: current_user)
-    @trip.likes ||= 0
-    @trip.likes += params[:count].to_i
+
     skip_authorization
 
     respond_to do |format|
