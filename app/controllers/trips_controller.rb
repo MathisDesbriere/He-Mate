@@ -20,8 +20,7 @@ class TripsController < ApplicationController
   def like
     @trip = Trip.find(params[:id])
     @like = @trip.likes.build(user: current_user)
-    @trip.likes ||= 0
-    @trip.likes += params[:count].to_i
+
     skip_authorization
 
     respond_to do |format|
