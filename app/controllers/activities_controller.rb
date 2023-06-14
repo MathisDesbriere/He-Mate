@@ -100,5 +100,4 @@ class ActivitiesController < ApplicationController
     response = http.request(request)
     return response.read_body
   end
-
 end

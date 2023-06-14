@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_14_000602) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_012130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_000602) do
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
+  create_table "chatrooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "creator_id", null: false
+    t.bigint "participant_id", null: false
+    t.index ["creator_id"], name: "index_chatrooms_on_creator_id"
+    t.index ["participant_id"], name: "index_chatrooms_on_participant_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "content"
@@ -76,6 +86,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_000602) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "trip_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_likes_on_trip_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "markers", force: :cascade do |t|
     t.float "longitude"
     t.float "latitude"
@@ -88,10 +107,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_000602) do
     t.index ["user_id"], name: "index_markers_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.bigint "chatroom_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "trips", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
-    t.integer "like"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -110,6 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_000602) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "nickname"
     t.text "biography"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -120,9 +149,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_000602) do
   add_foreign_key "activities", "markers"
   add_foreign_key "activities", "trips"
   add_foreign_key "activities", "users"
+  add_foreign_key "chatrooms", "users", column: "creator_id"
+  add_foreign_key "chatrooms", "users", column: "participant_id"
   add_foreign_key "comments", "trips"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "trips"
+  add_foreign_key "likes", "users"
   add_foreign_key "markers", "trips"
   add_foreign_key "markers", "users"
+  add_foreign_key "messages", "chatrooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "trips", "users"
 end

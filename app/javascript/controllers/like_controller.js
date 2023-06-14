@@ -46,7 +46,7 @@ export default class extends Controller {
          ,'accept': 'application/json'
         ,"X-CSRF-Token": document.querySelector("[name='csrf-token']").getAttribute("content")}})
         const data = await response.json();
-
+        console.log(data);
         if (!this.clicked) {
           this.likeIconTarget.classList.remove("fa-regular");
           this.likeIconTarget.classList.add("fa-solid");
