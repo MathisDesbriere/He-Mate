@@ -12,11 +12,6 @@
       <% end %>
       </div>
 
-
-
-
-
-
       <% if trip.images.any? %>
         <div class="carousel-inner">
           <div id="carouselExampleIndicators<%= index %>" class="carousel slide">
@@ -60,7 +55,7 @@
       <div class="card-trip-infos">
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
-          <p>Description: <%= trip.description %></p>
+          <p><u>Description</u> : <%= trip.description %></p>
         <div class="show-card-trip-user">
         <% if trip.user.image.present? %>
           <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
@@ -71,11 +66,23 @@
 
 
           <% if trip.marker %>
-            <p>Address: <%= trip.marker.address %></p>
+            <p><u>Address</u> : <%= trip.marker.address %></p>
           <% else %>
             <p>Address not available</p>
           <% end %>
+
+          <% if trip.start_date.present? %>
+            <p><u>Starting date</u> : <%= trip.start_date %></p>
+          <% end %>
+
+           <% if trip.end_date.present? %>
+            <p><u>Ending date</u> : <%= trip.end_date %></p>
+          <% end %>
+
+
         </div>
+
+
 
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
           <h2 data-like-target="likeCount"><%= trip.like %></h2>

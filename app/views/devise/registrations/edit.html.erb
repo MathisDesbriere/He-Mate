@@ -17,6 +17,11 @@
                       required: true,
                       autofocus: true,
                       input_html: { autocomplete: "last_name" }%>
+              <%= f.input :biography,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "biography" }%>
+
               <%= f.input :email, required: true, autofocus: true %>
 
               <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
