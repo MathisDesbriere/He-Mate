@@ -18,6 +18,23 @@
   height: auto;
 }
 
+.navbar-logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:55px;
+  margin-right: auto;
+}
+
+
+
+.message-icon {
+margin-right: 15px;
+}
+
+
+
 
 @media (min-width: 992px) {
   .user-profile-navbar {
@@ -38,10 +55,6 @@
 
   .nav-content {
     text-align: center;
-  }
-
-  .nav-item:hover {
-    background-color: #0B8D93;
   }
 }
 
@@ -76,9 +89,6 @@
   align-items: center;
 }
 
-.nav-item:hover {
-  background-color: #0B8D93;
-}
 
 .nav-trips {
   background-color: #0B8D93;
