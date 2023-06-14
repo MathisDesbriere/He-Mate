@@ -86,6 +86,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_012130) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "trip_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_likes_on_trip_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "markers", force: :cascade do |t|
     t.float "longitude"
     t.float "latitude"
@@ -111,7 +120,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_012130) do
   create_table "trips", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id", null: false
-    t.integer "like"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -131,6 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_012130) do
     t.string "first_name"
     t.string "last_name"
     t.string "nickname"
+    t.text "biography"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -144,6 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_012130) do
   add_foreign_key "chatrooms", "users", column: "participant_id"
   add_foreign_key "comments", "trips"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "trips"
+  add_foreign_key "likes", "users"
   add_foreign_key "markers", "trips"
   add_foreign_key "markers", "users"
   add_foreign_key "messages", "chatrooms"

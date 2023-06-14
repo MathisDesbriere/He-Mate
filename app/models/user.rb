@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :comments
   has_many :activities
   has_many :markers
+
   validates :image, presence: true
 
   has_many :follower_relationships, foreign_key: :following_id, class_name: 'Follow'
@@ -24,5 +25,4 @@ class User < ApplicationRecord
   def unfollow(user_id)
     following_relationships.find_by(following_id: user_id).destroy
   end
-
 end

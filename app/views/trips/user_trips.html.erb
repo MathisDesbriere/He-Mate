@@ -19,12 +19,12 @@
     <div class="card-trip">
 
       <div class="edit-delete-option">
-        <%= link_to trip_path(trip), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this trip?" }, class: "button-dlt" do %>
-          <i class="fa-sharp fa-solid fa-trash" style="color: #ffffff;"></i>
-        <% end %>
-
         <%= link_to edit_trip_path(trip), class: "button-edt" do %>
           <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
+        <% end %>
+
+        <%= link_to trip_path(trip), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this trip?" }, class: "button-dlt" do %>
+          <i class="fa-sharp fa-solid fa-trash" style="color: #ffffff;"></i>
         <% end %>
       </div>
 
@@ -76,14 +76,23 @@
       <div class="card-trip-infos">
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
-          <p>Description: <%= trip.description %></p>
+          <p><u>Description</u> : <%= trip.description %></p>
 
 
           <% if trip.marker %>
-            <p>Address: <%= trip.marker.address %></p>
+            <p><u>Address</u> : <%= trip.marker.address %></p>
           <% else %>
             <p>Address not available</p>
           <% end %>
+
+          <% if trip.start_date.present? %>
+            <p><u>Starting date</u> : <%= trip.start_date %></p>
+          <% end %>
+
+           <% if trip.end_date.present? %>
+            <p><u>Ending date</u> : <%= trip.end_date %></p>
+          <% end %>
+
         </div>
 
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
@@ -103,8 +112,9 @@
             <%= render "comments/form",trip: trip, comment: @comments %>
           </div>
         </div>
-        </div>
-  <% end %>
+  </div>
+
+<% end %>
   <% else %>
-  <h1>You are not authorized.</h1>
-  <% end %>
+    <h1>You are not authorized.</h1>
+<% end %>

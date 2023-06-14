@@ -13,9 +13,6 @@
     </div>
   </div>
 
-<p> <%= @following_count %>Following</p>
-<p><%= @follower_count %>Follower</p>
-
   <div class="my-profile-container">
     <div class="img-ctnr">
       <%= image_tag("bg-my-profile.jpeg", class: "mp-bg", alt: "bg-img-myprofile")%>
@@ -24,6 +21,15 @@
 
     <div class="my-profile-infos">
       <h1><%= @user.first_name + " " + @user.last_name %></h1>
+
+      <% if @user.biography.present? %>
+        <p>About me:<br></p>
+        <p><%= @user.biography %></p>
+      <% end %>
+      <br>
+
+      <p> Following : <%= @following_count %></p>
+      <p> Follower : <%=  @follower_count %></p>
 
       <br>
       <p>Edit my info :</p>
