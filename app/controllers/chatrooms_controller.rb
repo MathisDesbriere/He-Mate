@@ -25,7 +25,7 @@ class ChatroomsController < ApplicationController
       authorize @existing_chatroom
       redirect_to chatroom_path(@existing_chatroom)
     else
-      @chatroom = Chatroom.new(chatroom_params)
+      @chatroom = Chatroom.new(creator: creator, participant: participant)
       @chatroom.creator = creator
       @chatroom.participant = participant
 

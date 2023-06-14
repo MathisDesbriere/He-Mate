@@ -23,8 +23,8 @@
 <% @trips.each_with_index do |trip, index| %>
   <div class="card-trip">
     <div class="card-trip-title">
-      
-      
+
+
         <% if current_user != trip.user %>
         <%= link_to chatrooms_path(chatroom: { creator: current_user, participant: trip.user }), data: { turbo_method: :post } do %>
           <i class="fa-regular fa-comment" style="color: #0B8D93"></i>
@@ -42,7 +42,7 @@
               <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user, hidden_class: "" } %>
             <% end %>
           </div>
-     
+
 
     <% if trip.images.any? %>
       <div class="carousel-inner">
@@ -105,7 +105,7 @@
       <% if trip.start_date.present? %>
         <p><u>Starting date</u> : <%= trip.start_date %></p>
       <% end %>
-      
+
          <% if trip.end_date.present? %>
         <p><u>Ending date</u> : <%= trip.end_date %></p>
       <% end %>
@@ -123,10 +123,10 @@
             <% end %>
           <% end %>
         </div>
-     
+
 
       <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-        <h2 data-like-target="likeCount"><%= trip.like %></h2>
+        <%# <h2 data-like-target="likeCount"><%= trip.like</h2> %> %>
         <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
           <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
         <% end %>
