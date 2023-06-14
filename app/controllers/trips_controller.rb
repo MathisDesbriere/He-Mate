@@ -9,6 +9,7 @@ class TripsController < ApplicationController
     @trips = policy_scope(Trip)
     @comments = Comment.new
     @follow = Follow.new
+    @user = current_user
   end
 
   def like
