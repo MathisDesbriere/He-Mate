@@ -86,32 +86,32 @@
 
     <div class="card-trip-infos">
       <div class="card-trip-details">
-        <h2><%= trip.title %></h2>
-        <p><u>Description</u> : <%= trip.description %></p>
-      <div class="show-card-trip-user">
-      <% if trip.user.image.present? %>
-        <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
-      <% else %>
-      <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
-      <% end %>
-      </div>
+          <h2><%= trip.title %></h2>
+          <p><u>Description</u> : <%= trip.description %></p>
+        <div class="show-card-trip-user">
+          <% if trip.user.image.present? %>
+            <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
+          <% else %>
+            <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
+          <% end %>
+        </div>
 
-      <% if trip.marker %>
-        <p><u>Location</u> : <%= trip.marker.address %></p>
-      <% else %>
-        <p>Address not available</p>
-      <% end %>
+            <% if trip.marker %>
+              <p><u>Location</u> : <%= trip.marker.address %></p>
+            <% else %>
+              <p>Address not available</p>
+            <% end %>
 
-      <% if trip.start_date.present? %>
-        <p><u>Starting date</u> : <%= trip.start_date %></p>
-      <% end %>
 
-         <% if trip.end_date.present? %>
-        <p><u>Ending date</u> : <%= trip.end_date %></p>
-      <% end %>
+            <% if trip.start_date.present? %>
+              <p><u>Starting date</u> : <%= trip.start_date %></p>
+            <% end %>
+
+            <% if trip.end_date.present? %>
+              <p><u>Ending date</u> : <%= trip.end_date %></p>
+            <% end %>
       </div>
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-
           <h2 data-like-target="likeCount"><%= trip.likes.count %></h2>
           <% if user_signed_in? %>
             <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
@@ -125,12 +125,12 @@
         </div>
 
 
-      <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-        <%# <h2 data-like-target="likeCount"><%= trip.like</h2> %> %>
-        <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
-          <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
-        <% end %>
-      </div>
+        <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
+          <h2 data-like-target="likeCount"><%= trip.likes %></h2>
+            <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
+              <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+            <% end %>
+        </div>
 
     </div>
     <div class="card-trip-comments"data-controller="insert-in-list">
@@ -143,5 +143,5 @@
         <%= render "comments/form",trip: trip, comment: @comments %>
       </div>
     </div>
-  </div>
+    </div>
 <% end %>
