@@ -110,7 +110,7 @@
         </div>
 
       </div>
-      <div class="card-trip-comments"data-controller="insert-in-list">
+      <div class="card-trip-comments" data-controller="insert-in-list">
           <div data-insert-in-list-target="items">
             <% trip.comments.each do |comment| %>
               <%= render partial: 'comments/comment', locals: { comment: comment } %>
