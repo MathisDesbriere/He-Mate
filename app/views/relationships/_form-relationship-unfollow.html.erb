@@ -1,5 +1,13 @@
-<div>
-<%= simple_form_for(@follow, url: "/relationships/unfollow_user/#{user.id}") do |f| %>
-    <%= f.submit "Unfollow", class: 'btn unfollow-button' %>
+<%= simple_form_for(@follow, url: "/relationships/unfollow_user/#{user.id}",
+  data: {
+    relationship_target: "unfollow",
+    action: "submit->insert-in-list#unfollow"
+  },
+  html: { class: hidden_class }
+)  do |f| %>
+    <input type="hidden" name="follow[user_id]" data-user-id="<%= user.id %>">
+
+    <%= f.submit "Unfollow", class: 'unfollow-button' do %>
+    <i class="fa-solid fa-user-plus" style="color: #ee9022;"></i>
+    <% end %>
   <% end %>
-</div>

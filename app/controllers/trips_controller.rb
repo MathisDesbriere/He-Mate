@@ -7,21 +7,26 @@ class TripsController < ApplicationController
 
   def index
     @trips = policy_scope(Trip)
+    followed_user_trips = current_user.followings.map(&:trips).flatten.sort_by(&:created_at).reverse
+    remaining_trips = Trip.where.not(user_id: current_user.followings.pluck(:id)).order(created_at: :desc)
+
+    @trips = followed_user_trips + remaining_trips
+
     @comments = Comment.new
     @follow = Follow.new
   end
 
   def like
     @trip = Trip.find(params[:id])
-    @trip.like ||= 0
-    @trip.like += params[:count].to_i
-
+    @like = @trip.likes.build(user: current_user)
+    @trip.likes ||= 0
+    @trip.likes += params[:count].to_i
     skip_authorization
 
     respond_to do |format|
-      if @trip.save
-        format.html { redirect_to trips_path(@trip.like) }
-        format.json { render json: { count: @trip.like } }
+      if @like.save && @trip.save
+        format.html { redirect_to trips_path(@trip) }
+        format.json { render json: { count: @trip.likes } }
       else
         format.html { render "trips/index", status: :unprocessable_entity }
         format.json { render json: { error: "Failed to update like count" }, status: :unprocessable_entity }

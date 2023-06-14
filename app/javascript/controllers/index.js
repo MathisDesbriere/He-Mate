@@ -21,3 +21,6 @@ application.register("pictures-activities", PicturesActivitiesController)
 
 import InsertInListController from "./insert_in_list_controller"
 application.register("insert-in-list", InsertInListController)
+
+import RelationshipController from "./relationship_controller"
+application.register("relationship", RelationshipController)
