@@ -1,108 +1,121 @@
-<% @trips.each_with_index do |trip, index| %>
-    <div class="card-trip">
-
-      <div class="card-trip-title">
-          <%= link_to user_trips_path(trip.user), class: "card-trip-user-name-link" do %>
-            <p class="card-trip-user-name"><%= trip.user.first_name %></p>
-          <% end %>
-           <% if trip.user.followers.include?(current_user) %>
-        <%= render partial: 'relationships/form-relationship-unfollow', locals: { user: trip.user } %>
-      <% else %>
-        <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user } %>
+<div class="search-index">
+  <div class="row justify-content-center">
+    <div class="col-sm-8 my-3">
+      <%= form_with url: trips_path, method: :get, class: "d-flex" do %>
+        <%= text_field_tag :address,
+              params[:address],
+              class: "form-control",
+              placeholder: "Type a keyword"
+          %>
+        <%= submit_tag "Search", name: "", class: "button-search" %>
       <% end %>
-      </div>
+    </div>
+  </div>
+</div>
 
-      <% if trip.images.any? %>
-        <div class="carousel-inner">
-          <div id="carouselExampleIndicators<%= index %>" class="carousel slide">
-            <% unless trip.images.size == 1 %>
-              <div class="carousel-indicators">
-                <% trip.images.each_with_index do |_image, i| %>
-                  <button type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide-to="<%= i + 1 %>" <%= 'class=active aria-current=true' if i == 0 %> aria-label="Slide <%= i + 1 %>"></button>
-                <% end %>
+<% if @address.present? %>
+  <h3>Here are all trips around "<%= @address %>" :</h3>
+<% else %>
+  <h3>All our trips are displayed here:</h3>
+<% end %>
+
+<% @trips.each_with_index do |trip, index| %>
+  <div class="card-trip">
+    <div class="card-trip-title">
+        <%= link_to user_trips_path(trip.user), class: "card-trip-user-name-link" do %>
+          <p class="card-trip-user-name"><%= trip.user.first_name %></p>
+        <% end %>
+          <% if trip.user.followers.include?(current_user) %>
+      <%= render partial: 'relationships/form-relationship-unfollow', locals: { user: trip.user } %>
+    <% else %>
+      <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user } %>
+    <% end %>
+    </div>
+
+    <% if trip.images.any? %>
+      <div class="carousel-inner">
+        <div id="carouselExampleIndicators<%= index %>" class="carousel slide">
+          <% unless trip.images.size == 1 %>
+            <div class="carousel-indicators">
+              <% trip.images.each_with_index do |_image, i| %>
+                <button type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide-to="<%= i + 1 %>" <%= 'class=active aria-current=true' if i == 0 %> aria-label="Slide <%= i + 1 %>"></button>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% trip.images.each_with_index do |image, i| %>
+            <%= link_to trip_path(trip) do %>
+              <div class="carousel-item<%= " active" if i == 0 %>">
+                <%= cl_image_tag(image.key, class: "index-img-trip") %>
               </div>
             <% end %>
-
-            <% trip.images.each_with_index do |image, i| %>
-              <%= link_to trip_path(trip) do %>
-                <div class="carousel-item<%= " active" if i == 0 %>">
-                  <%= cl_image_tag(image.key, class: "index-img-trip") %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-
-          <% unless trip.images.size == 1 %>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
           <% end %>
         </div>
-      <% else %>
-        <%= link_to trip_path(trip) do %>
-          <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
+
+        <% unless trip.images.size == 1 %>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators<%= index %>" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         <% end %>
+      </div>
+    <% else %>
+      <%= link_to trip_path(trip) do %>
+        <%= image_tag("default-trip-img.png", class: "index-img-trip") %>
+      <% end %>
+    <% end %>
+
+
+
+    <div class="card-trip-infos">
+      <div class="card-trip-details">
+        <h2><%= trip.title %></h2>
+        <p><u>Description</u> : <%= trip.description %></p>
+      <div class="show-card-trip-user">
+      <% if trip.user.image.present? %>
+        <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
+      <% else %>
+      <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
+      <% end %>
+      </div>
+
+      <% if trip.marker %>
+        <p><u>Location</u> : <%= trip.marker.address %></p>
+      <% else %>
+        <p>Address not available</p>
       <% end %>
 
+      <% if trip.start_date.present? %>
+        <p><u>Starting date</u> : <%= trip.start_date %></p>
+      <% end %>
 
-
-      <div class="card-trip-infos">
-        <div class="card-trip-details">
-          <h2><%= trip.title %></h2>
-          <p><u>Description</u> : <%= trip.description %></p>
-        <div class="show-card-trip-user">
-        <% if trip.user.image.present? %>
-          <%= image_tag trip.user.image.url, class: "avatar-bordered" %>
-        <% else %>
-        <img src="<%= asset_path('seedUser.jpg') %>" alt="avatar" class="avatar-bordered" />
-        <% end %>
-        </div>
-
-
-          <% if trip.marker %>
-            <p><u>Address</u> : <%= trip.marker.address %></p>
-          <% else %>
-            <p>Address not available</p>
-          <% end %>
-
-          <% if trip.start_date.present? %>
-            <p><u>Starting date</u> : <%= trip.start_date %></p>
-          <% end %>
-
-           <% if trip.end_date.present? %>
-            <p><u>Ending date</u> : <%= trip.end_date %></p>
-          <% end %>
-
-
-        </div>
-
-
-
-        <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-          <h2 data-like-target="likeCount"><%= trip.like %></h2>
-          <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
-            <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
-          <% end %>
-        </div>
-
+        <% if trip.end_date.present? %>
+        <p><u>Ending date</u> : <%= trip.end_date %></p>
+      <% end %>
       </div>
-      <div class="card-trip-comments"data-controller="insert-in-list">
-          <div data-insert-in-list-target="items">
-            <% trip.comments.each do |comment| %>
-              <%= render partial: 'comments/comment', locals: { comment: comment } %>
-            <% end %>
-          </div>
-          <div class="comment-box">
-            <%= render "comments/form",trip: trip, comment: @comments %>
-          </div>
-        </div>
 
+      <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
+        <h2 data-like-target="likeCount"><%= trip.like %></h2>
+        <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
+          <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+        <% end %>
+      </div>
 
-       </div>
-  <% end %>
+    </div>
+    <div class="card-trip-comments"data-controller="insert-in-list">
+      <div data-insert-in-list-target="items">
+        <% trip.comments.each do |comment| %>
+          <%= render partial: 'comments/comment', locals: { comment: comment } %>
+        <% end %>
+      </div>
+      <div class="comment-box">
+        <%= render "comments/form",trip: trip, comment: @comments %>
+      </div>
+    </div>
+  </div>
+<% end %>

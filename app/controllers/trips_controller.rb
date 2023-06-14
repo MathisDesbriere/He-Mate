@@ -9,6 +9,13 @@ class TripsController < ApplicationController
     @trips = policy_scope(Trip)
     @comments = Comment.new
     @follow = Follow.new
+
+    @address = params[:address]
+    if @address.present?
+      @latitude, @longitude = Geocoder.coordinates(@address)
+      @markers = Marker.near([@latitude, @longitude], 35)
+      @trips = @markers.includes(:trip).map(&:trip).uniq
+    end
   end
 
   def like
