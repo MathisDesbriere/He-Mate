@@ -41,10 +41,21 @@
   <div class="show-card-trip-infos">
     <div class="show-card-trip-details">
       <h2><%= @trip.title.capitalize %></h2>
-      <p>Description : <%= @trip.description %></p>
-
-
-
+        <% if @trip.marker %>
+          <p><%= @trip.marker.address %></p>
+        <% end %>
+        <br>
+        <p><%= @trip.description %></p>
+        <br>
+        <% if @trip.start_date.present? %>
+          <p> <%= @trip.start_date %></p>
+        <% end %>
+        <br>
+        <% if @trip.end_date.present? %>
+          <p> <%= @trip.end_date %></p>
+        <% end %>
+        <br>
+      <p><%= @trip.activities %></p>
 
     </div>
 
@@ -77,14 +88,15 @@
       </div>
 
 
-       <div class="card-trip-comments"data-controller="insert-in-list">
+
+  </div>
+  <div class="card-trip-comments"data-controller="insert-in-list">
           <div data-insert-in-list-target="items">
             <% @trip.comments.each do |comment| %>
               <%= render partial: 'comments/comment', locals: { comment: comment } %>
             <% end %>
           </div>
         </div>
-  </div>
 </div>
 
 
