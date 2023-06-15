@@ -208,15 +208,17 @@
   border: 0;
   transition: opacity 0.3s ease;
 
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
-.button-search:hover {
-  opacity: 0.8;
-}
+// .button-search:hover {
+// }
 
 .button-send {
   background: #0B8D93;
-  box-shadow: #0B8D93 0 10px 20px -10px;
+  // box-shadow: #0B8D93 0 10px 20px -10px;
   box-sizing: border-box;
   border-radius: 0px 20px 20px 0px;
   color: #FFFFFF;
@@ -234,4 +236,13 @@
   width: fit-content;
   word-break: break-word;
   border: 0;
+}
+
+.foo {
+  margin-bottom: 0 !important;
+}
+
+.foo > input {
+  border-radius: 20px 0px 0px 20px;
+
 }
