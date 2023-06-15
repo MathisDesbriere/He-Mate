@@ -13,11 +13,6 @@
   </div>
 </div>
 
-<% if @address.present? %>
-  <h3>Here are all trips around "<%= @address %>" :</h3>
-<% else %>
-  <h3>All our trips are displayed here:</h3>
-<% end %>
 
 <% @trips.each_with_index do |trip, index| %>
   <div class="card-trip">
