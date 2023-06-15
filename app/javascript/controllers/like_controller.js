@@ -5,7 +5,7 @@ export default class extends Controller {
 
   connect() {
     // Code to run when the controller is connected
-    console.log("Success ");
+    console.log("Success");
   }
 
   async like(event) {
@@ -25,10 +25,10 @@ export default class extends Controller {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data)
-        if (data.count > 0) {
-          this.likeIconTarget.classList.add("fa-solid");
+        console.log(data.count)
+        if (data.count.length > 0) {
           this.likeIconTarget.classList.remove("fa-regular");
+          this.likeIconTarget.classList.add("fa-solid");
         } else {
           this.likeIconTarget.classList.remove("fa-solid");
           this.likeIconTarget.classList.add("fa-regular");
