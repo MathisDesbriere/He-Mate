@@ -111,6 +111,7 @@
               <p><u>Ending date</u> : <%= trip.end_date %></p>
             <% end %>
       </div>
+
         <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
           <h2 data-like-target="likeCount"><%= trip.likes.count %></h2>
           <% if user_signed_in? %>

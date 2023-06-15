@@ -14,7 +14,6 @@ export default class extends Controller {
     const tripId = this.element.dataset.tripId;
     try {
       const response = await fetch(`/trips/${tripId}/like`,
-
         {
           method: "POST",
           headers: {
@@ -34,7 +33,7 @@ export default class extends Controller {
           this.likeIconTarget.classList.remove("fa-solid");
           this.likeIconTarget.classList.add("fa-regular");
         }
-        this.likeCountTarget.innerText = parseInt(data.count);
+        this.likeCountTarget.innerText = data.count.length;
 
       } else {
         console.log("Failed to update like count");
