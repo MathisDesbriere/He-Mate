@@ -95,10 +95,16 @@
 
         </div>
 
-        <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-          <h2 data-target="like-count"><%= trip.like %></h2>
-          <%= link_to like_trip_path(trip), method: :post, remote: true, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" } do %>
-            <i data-target="like-icon" class="fa <%= trip.like&.positive? ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+                <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
+          <h2 data-like-target="likeCount"><%= trip.likes.count %></h2>
+          <% if user_signed_in? %>
+            <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
+              <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+            <% end %>
+          <% else %>
+            <%= link_to new_user_session_path do %>
+              <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+            <% end %>
           <% end %>
         </div>
       </div>
