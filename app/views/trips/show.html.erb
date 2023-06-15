@@ -3,7 +3,40 @@
     <p>User: <%= @trip.user.last_name %></p>
   </div>
 
-  <img class="img-show-trip" src="<%= asset_path('seedTrip.jpeg') %>" />
+     <% if @trip.images.any? %>
+      <div class="carousel-inner">
+        <div id="carouselExampleIndicators" class="carousel slide">
+          <% unless @trip.images.size == 1 %>
+            <div class="carousel-indicators">
+              <% @trip.images.each_with_index do |_image, i| %>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i + 1 %>" <%= 'class=active aria-current=true' if i == 0 %> aria-label="Slide <%= i + 1 %>"></button>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% @trip.images.each_with_index do |image, i| %>
+              <div class="carousel-item<%= " active" if i == 0 %>">
+                <%= cl_image_tag(image.key, class: "img-show-trip") %>
+              </div>
+          <% end %>
+        </div>
+
+        <% unless @trip.images.size == 1 %>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        <% end %>
+      </div>
+    <% else %>
+        <%= image_tag("default-trip-img.png", class: "img-show-trip") %>
+    <% end %>
+
 
   <div class="show-card-trip-infos">
     <div class="show-card-trip-details">
