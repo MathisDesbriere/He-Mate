@@ -1,14 +1,18 @@
 .chatroom {
   background: white;
-  margin-top: 9px;
-  height: calc(100vh - 75px);
+  // height: calc(100vh - 125px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
+  margin-top: 80px;
+
+  .chatroom-header {
+    border-bottom: 1px solid $gray-200;
+    display: flex;
+  }
 
   h1 {
-    border-bottom: 1px solid $gray-200;
     margin-bottom: 0;
     padding: 1rem;
   }
@@ -26,5 +30,13 @@
     .form-group {
       margin-bottom: 0;
     }
+  }
+}
+
+
+
+@media (max-width: 330px) {
+  .chatroom {
+    margin-top: 105px;
   }
 }

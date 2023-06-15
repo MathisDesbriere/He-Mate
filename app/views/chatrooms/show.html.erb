@@ -1,15 +1,30 @@
 <div class="container chatroom"
   data-controller="chatroom-subscription"
   data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>"
->
+  data-chatroom-subscription-current-user-id-value="<%= current_user.id %>">
+
   <% if current_user.id == @chatroom.creator %>
+  <div class="chatroom-header">
+    <%= link_to user_trips_path(@chatroom.participant) do %>
+      <%= image_tag @chatroom.participant.image.url, class: "chatroom-avatar" %>
+    <% end %>
     <h1><%= @chatroom.participant.first_name %> <%= @chatroom.participant.last_name %></h1>
+  </div>
   <% else %>
+  <div class="chatroom-header">
+    <%= link_to user_trips_path(@chatroom.creator) do %>
+      <%= image_tag @chatroom.creator.image.url, class: "chatroom-avatar" %>
+    <% end %>
     <h1><%= @chatroom.creator.first_name %> <%= @chatroom.creator.last_name %></h1>
+  </div>
   <% end %>
-  <div class="messages" data-chatroom-subscription-target="messages">
+  <div data-chatroom-subscription-target="messages" class="chatroom-scroll">
     <% @chatroom.messages.each do |message| %>
-      <%= render "messages/message", message: message %>
+      <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+        <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
+          <%= render "messages/message", message: message %>
+        </div>
+      </div>
     <% end %>
   </div>
   <%= simple_form_for [@chatroom, @message],

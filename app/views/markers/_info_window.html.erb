@@ -1,3 +1,13 @@
-<h5><%= marker.trip.title %></h5>
-<p><%= marker.trip.start_date %> <%= marker.trip.start_date %></p>
+<h5><%= link_to marker.trip.title, trip_path(marker.trip), class: "no-decoration" %></h5>
+<p>
+  <% if marker.trip.start_date && marker.trip.end_date %>
+    <p>From:
+    <%= marker.trip.start_date.strftime("%d/%m/%Y") %> <br>
+    To:
+    <%= marker.trip.end_date.strftime("%d/%m/%Y") %>
+    </p>
+  <% else %>
+    Date not available
+  <% end %>
+</p>
 <p><%= marker.trip.description %></p>
