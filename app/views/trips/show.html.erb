@@ -9,6 +9,10 @@
     <div class="show-card-trip-details">
       <h2><%= @trip.title.capitalize %></h2>
       <p>Description : <%= @trip.description %></p>
+
+
+
+
     </div>
 
       <div class="show-card-trip-user">
@@ -43,3 +47,12 @@
         </div>
   </div>
 </div>
+
+
+
+ <% if trip.start_date.present? %>
+  <p><u>Starting date</u> : <%= trip.start_date %></p>
+<% end %>
+<% if trip.end_date.present? %>
+  <p><u>Ending date</u> : <%= trip.end_date %></p>
+<% end %>

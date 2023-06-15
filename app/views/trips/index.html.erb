@@ -95,21 +95,14 @@
       <div class="card-trip-details">
 
         <h2><%= trip.title %></h2>
-        <p><u>Description</u> : <%= trip.description %></p>
-
         <% if trip.marker %>
-          <p><u>Location</u> : <%= trip.marker.address %></p>
+          <p><i><%= trip.marker.address %></i></p>
         <% else %>
-          <p>Address not available</p>
+          <p></p>
         <% end %>
-
-        <% if trip.start_date.present? %>
-          <p><u>Starting date</u> : <%= trip.start_date %></p>
-        <% end %>
-
-        <% if trip.end_date.present? %>
-          <p><u>Ending date</u> : <%= trip.end_date %></p>
-        <% end %>
+        
+        <br>
+        <p><%= trip.description %></p>
       </div>
 
 
