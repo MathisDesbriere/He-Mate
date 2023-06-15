@@ -8,10 +8,10 @@ class TripsController < ApplicationController
   def index
     @trips = policy_scope(Trip)
     if user_signed_in?
-      followed_user_trips = current_user.followings.map(&:trips).flatten.sort_by(&:created_at).reverse
-      remaining_trips = Trip.where.not(user_id: current_user.followings.pluck(:id)).order(created_at: :desc)
+      @followed_user_trips = current_user.followings.map(&:trips).flatten.sort_by(&:created_at).reverse
+      @remaining_trips = Trip.where.not(user_id: current_user.followings.pluck(:id)).order(created_at: :desc)
 
-      @trips = followed_user_trips + remaining_trips
+      @trips = @followed_user_trips + @remaining_trips
     end
     @comments = Comment.new
     @follow = Follow.new
@@ -22,7 +22,7 @@ class TripsController < ApplicationController
     if @address.present?
       @latitude, @longitude = Geocoder.coordinates(@address)
       @markers = Marker.near([@latitude, @longitude], 35)
-      @trips = @markers.includes(:trip).map(&:trip).uniq
+      @trips = @markers.includes(:trip).where.not(trip_id: nil).map(&:trip).uniq
     end
   end
 

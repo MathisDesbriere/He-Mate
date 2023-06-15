@@ -76,23 +76,23 @@
       <div class="card-trip-infos">
         <div class="card-trip-details">
           <h2><%= trip.title %></h2>
-          <p><u>Description</u> : <%= trip.description %></p>
 
+           <% if trip.marker %>
+          <p><i><%= trip.marker.address %></i></p>
+        <% else %>
+          <p></p>
+        <% end %>
+            <br>
+            <p id="mytrip-dscr"> <%= trip.description %> </p>
+            <br>
 
-          <% if trip.marker %>
-            <p><u>Location</u> : <%= trip.marker.address %></p>
-          <% else %>
-            <p>Address not available</p>
-          <% end %>
+            <% if trip.start_date.present? %>
+              <p id="mytrip-date"><u>Starting date</u> : <%= trip.start_date %></p>
+            <% end %>
 
-          <% if trip.start_date.present? %>
-            <p><u>Starting date</u> : <%= trip.start_date %></p>
-          <% end %>
-
-           <% if trip.end_date.present? %>
-            <p><u>Ending date</u> : <%= trip.end_date %></p>
-          <% end %>
-
+              <% if trip.end_date.present? %>
+              <p id="mytrip-date"><u>Ending date</u> : <%= trip.end_date %></p>
+            <% end %>
         </div>
 
               <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
