@@ -20,18 +20,24 @@
 
       </div>
 
-              <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-          <h2 data-like-target="likeCount"><%= trip.likes.count %></h2>
-          <% if user_signed_in? %>
-            <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
-              <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+            <div class="card-trip-like" data-controller="like" data-trip-id="<%=  @trip.id %>">
+        <h2 data-like-target="likeCount"><%= @trip.likes.count %></h2>
+        <% if user_signed_in? %>
+          <% if @trip.likes.find_by(user_id: current_user.id) %>
+            <%= link_to like_trip_path(@trip), method: :post, class: 'like-link', data: { trip_id: @trip.id, action: "click->like#like" }, remote: true  do %>
+              <i data-like-target="likeIcon" class="fa-solid fa-heart red"></i>
             <% end %>
           <% else %>
-            <%= link_to new_user_session_path do %>
+            <%= link_to like_trip_path(@trip), method: :post, class: 'like-link', data: { trip_id: @trip.id, action: "click->like#like" }, remote: true  do %>
               <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
             <% end %>
           <% end %>
-        </div>
+        <% else %>
+          <%= link_to new_user_session_path do %>
+            <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
+          <% end %>
+        <% end %>
+      </div>
 
 
        <div class="card-trip-comments"data-controller="insert-in-list">
