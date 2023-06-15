@@ -1,6 +1,4 @@
-
-
-  <%= simple_form_for(@follow, url: "/relationships/follow_user/#{user.id}",
+<%= simple_form_for(@follow, url: "/relationships/follow_user/#{user.id}",
     data: {
       relationship_target: "follow",
       action: "submit->relationship#follow"
@@ -9,8 +7,7 @@
   )  do |f| %>
     <input type="hidden" name="follow[user_id]" data-user-id="<%= user.id %>">
 
-    <%= f.submit "Follow", class: 'follow-button' do %>
+    <%= button_tag( :class => 'follow-button' ) do %>
     <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
     <% end %>
   <% end %>
-
