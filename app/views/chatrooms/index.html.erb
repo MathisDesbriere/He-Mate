@@ -1,26 +1,33 @@
-<div class="chatroom-list">
-  <% @chatrooms.each do |chatroom| %>
-    <%= link_to chatroom_path(chatroom), class: "link-no-color" do %>
-      <div class="chatroom-card">
-        <div class="chatroom-card-content">
-          <% if current_user.id == chatroom.creator.id %>
-            <%= image_tag chatroom.participant.image.url, class: "chatroom-avatar" %>
-            <div class="name-msg">
-              <b><%= chatroom.participant.first_name.capitalize %> <%= chatroom.participant.last_name.capitalize %></b>
-            <% else %>
-              <%= image_tag chatroom.creator.image.url, class: "chatroom-avatar" %>
+<% if @chatrooms.present? %>
+  <div class="chatroom-list">
+    <% @chatrooms.each do |chatroom| %>
+      <%= link_to chatroom_path(chatroom), class: "link-no-color" do %>
+        <div class="chatroom-card">
+          <div class="chatroom-card-content">
+            <% if current_user.id == chatroom.creator.id %>
+              <%= image_tag chatroom.participant.image.url, class: "chatroom-avatar" %>
               <div class="name-msg">
-                <b><%= chatroom.creator.first_name.capitalize %> <%= chatroom.creator.last_name.capitalize %></b>
-            <% end %>
-            <% last_message = @messages.where(chatroom: chatroom).last %>
-            <% if last_message %>
-              <p><%= last_message.content.first(18) %></p>
-            <% else %>
-              <p><em>Start a conversation!</em></p>
-            <% end %>
+                <b><%= chatroom.participant.first_name.capitalize %> <%= chatroom.participant.last_name.capitalize %></b>
+              <% else %>
+                <%= image_tag chatroom.creator.image.url, class: "chatroom-avatar" %>
+                <div class="name-msg">
+                  <b><%= chatroom.creator.first_name.capitalize %> <%= chatroom.creator.last_name.capitalize %></b>
+              <% end %>
+              <% last_message = @messages.where(chatroom: chatroom).last %>
+              <% if last_message %>
+                <p><%= last_message.content.first(18) %></p>
+              <% else %>
+                <p><em>Start a conversation!</em></p>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
+  </div>
+  <% else %>
+    <div class="no-message">
+      <h4>No message to display yet!</h4>
+      <p>Find a profile in the feed and send a message using the icon.</p>
+    </div>
   <% end %>
-</div>
