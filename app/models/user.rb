@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :comments
   has_many :activities
   has_many :markers
+  has_many :likes
 
   validates :image, presence: true
 
