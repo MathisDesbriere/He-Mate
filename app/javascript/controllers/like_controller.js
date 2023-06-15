@@ -117,6 +117,5 @@ export default class extends Controller {
     // } catch (error) {
     //   console.log(error);
     // }
-  }
-
 }
+
