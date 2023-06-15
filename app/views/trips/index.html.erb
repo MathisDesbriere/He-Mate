@@ -5,6 +5,7 @@
         <%= text_field_tag :address,
               params[:address],
               class: "form-control",
+              id: "index-form-control",
               placeholder: "Type a keyword"
                %>
         <%= submit_tag "Search", name: "", class: "button-search" %>
@@ -13,25 +14,24 @@
   </div>
 </div>
 
-<% if @address.present? %>
-  <h3>Here are all trips around "<%= @address %>" :</h3>
-<% else %>
-  <h3>All our trips are displayed here:</h3>
-<% end %>
+
 
 <% @trips.each_with_index do |trip, index| %>
   <div class="card-trip">
     <div class="card-trip-title">
 
-        <%= link_to user_trips_path(trip.user), class: "card-trip-user-name-link" do %>
-          <p class="card-trip-user-name"><%= trip.user.first_name %></p>
-        <% end %>
+      <%= link_to user_trips_path(trip.user), class: "card-trip-user-name-link" do %>
+        <p class="card-trip-user-name"><%= trip.user.first_name %></p>
+      <% end %>
 
+      <div class="chat-follow-container">
 
         <% if current_user != trip.user %>
-          <%= link_to chatrooms_path(chatroom: { creator: current_user, participant: trip.user }), data: { turbo_method: :post } do %>
-            <i class="fa-regular fa-comment" style="color: #0B8D93"></i>
-          <% end %>
+          <div class="chatbox-icon">
+            <%= link_to chatrooms_path(chatroom: { creator: current_user, participant: trip.user }), data: { turbo_method: :post } do %>
+              <i class="fa-regular fa-comment fa-xl" style="color: #0B8D93"></i>
+            <% end %>
+          </div>
         <% end %>
 
         <div data-controller="relationship">
@@ -42,7 +42,10 @@
             <%= render partial: 'relationships/form-relationship-unfollow', locals: { user: trip.user, hidden_class: "d-none" } %>
             <%= render partial: 'relationships/form-relationship-follow', locals: { user: trip.user, hidden_class: "" } %>
           <% end %>
+        </div>
+
       </div>
+
     </div>
 
 
