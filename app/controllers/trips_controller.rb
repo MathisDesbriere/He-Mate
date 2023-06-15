@@ -7,11 +7,12 @@ class TripsController < ApplicationController
 
   def index
     @trips = policy_scope(Trip)
-    followed_user_trips = current_user.followings.map(&:trips).flatten.sort_by(&:created_at).reverse
-    remaining_trips = Trip.where.not(user_id: current_user.followings.pluck(:id)).order(created_at: :desc)
+    if user_signed_in?
+      followed_user_trips = current_user.followings.map(&:trips).flatten.sort_by(&:created_at).reverse
+      remaining_trips = Trip.where.not(user_id: current_user.followings.pluck(:id)).order(created_at: :desc)
 
-    @trips = followed_user_trips + remaining_trips
-
+      @trips = followed_user_trips + remaining_trips
+    end
     @comments = Comment.new
     @follow = Follow.new
     @user = current_user
