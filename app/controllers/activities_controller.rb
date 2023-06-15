@@ -21,10 +21,17 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    activities_params = params[:activity]["activities"]
+    @activities_params = params[:activity]["activities"]
     has_errors = false
+    @selected_activities = @activities_params.reject { |_token, activity| activity['selected'] == '0' }
 
-    activities_params.each do |attraction_id, attraction_details|
+    if @selected_activities.empty?
+      skip_authorization
+      redirect_to trips_path
+      return
+    end
+
+    @activities_params.each do |attraction_id, attraction_details|
       next unless attraction_details['selected'] == '1' # Vérifier si l'attraction est sélectionnée
 
       activity = Activity.new(

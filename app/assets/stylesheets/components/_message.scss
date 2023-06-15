@@ -25,7 +25,6 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   border: rgba(255, 255, 255, 0.44) 1px solid;
   object-fit: cover;
 
@@ -40,6 +39,40 @@
 }
 
 .no-message {
+  margin-top: 50vh;
   text-align: center;
-  vertical-align: middle;
+}
+// To style the wrapping div
+.message-row {
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+// To style the message itself
+.sender-style, .receiver-style {
+  width: 70%;
+  max-width: 400px;
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 80px;
+}
+
+.sender-style {
+  border-radius: 15px;
+  border: solid 1px  #0B8D93;
+}
+
+.receiver-style {
+  border-radius: 15px;
+  border: solid 1px   #EE9C22;}
+
+.chatroom-scroll {
+overflow-y: scroll;
+height: 64.4vh;
+}
+
+@media (min-width: 992px) {
+  .chatroom-scroll {
+    height: 65.4vh;
+    }
 }
