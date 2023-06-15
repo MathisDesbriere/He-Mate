@@ -27,6 +27,7 @@
           <p class="card-trip-user-name"><%= trip.user.first_name %></p>
         <% end %>
 
+
         <% if current_user != trip.user %>
           <%= link_to chatrooms_path(chatroom: { creator: current_user, participant: trip.user }), data: { turbo_method: :post } do %>
             <i class="fa-regular fa-comment" style="color: #0B8D93"></i>
@@ -43,6 +44,7 @@
           <% end %>
       </div>
     </div>
+
 
 
 
@@ -118,6 +120,7 @@
 
       <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
         <h2 data-like-target="likeCount"><%= trip.likes.count %></h2>
+
           <% if user_signed_in? %>
             <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
               <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
@@ -128,14 +131,7 @@
             <% end %>
           <% end %>
       </div>
-
-      <div class="card-trip-like" data-controller="like" data-trip-id="<%= trip.id %>">
-        <h2 data-like-target="likeCount"><%= trip.likes %></h2>
-          <%= link_to like_trip_path(trip), method: :post, class: 'like-link', data: { trip_id: trip.id, action: "click->like#like" }, remote: true  do %>
-            <i data-like-target="likeIcon" class="fa-regular fa-heart red"></i>
-          <% end %>
-      </div>
-
+      
     </div>
 
 
@@ -151,4 +147,5 @@
     </div>
 
   </div>
+
 <% end %>
