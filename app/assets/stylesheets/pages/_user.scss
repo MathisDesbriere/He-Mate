@@ -22,4 +22,31 @@
   border: white 1px solid;
 }
 
+.edit-profile-log-out {
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.followme {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 25px;
+  background: #FFFFFF;
+  border-radius: 999px;
+  opacity: 0.8;
+  text-align: center;
+
+
+}
+
+.followme > span {
+
+  color: #EE9C22;
+  font-size: 13px;
+
+}
