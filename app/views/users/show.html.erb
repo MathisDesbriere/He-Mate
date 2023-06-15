@@ -23,9 +23,9 @@
       <h1><%= @user.first_name + " " + @user.last_name %></h1>
 
        <div class="followme">
-        <span> Following : <%= @following_count %></span> <span> Follower : <%=  @follower_count %></span>
+        <span> Following : <b><%= @following_count %></b></span> <span> Follower : <b><%=  @follower_count %></b></span>
       </div>
-      <br>
+      <br><br>
 
       <% if @user.biography.present? %>
         <p>About me:<br></p>
