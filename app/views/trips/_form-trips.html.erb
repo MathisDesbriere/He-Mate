@@ -1,7 +1,7 @@
 <%= simple_form_for trip do |f| %>
-  <%= f.input :title, placeholder: "Australia with my family", input_html: { class: 'custom-input' } %>
+  <%= f.input :title, placeholder: "My title...", input_html: { class: 'custom-input' } %>
 
-  <%= f.input :description, placeholder: 'Stunning views, perfect location for a weekend in the capital...', input_html: { class: 'custom-input' } %>
+  <%= f.input :description, placeholder: 'My description...', input_html: { class: 'custom-input' } %>
 
   <%= f.input :images, as: :file, input_html: { multiple: true } %>
 
