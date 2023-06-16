@@ -41,20 +41,24 @@
   <div class="show-card-trip-infos">
     <div class="show-card-trip-details">
       <h2><%= @trip.title.capitalize %></h2>
+
         <% if @trip.marker %>
-          <sub><%= @trip.marker.address %></sub>
-        <% end %>
+      <p><i><%= @trip.marker.address %></i></p>
+    <% else %>
+      <p></p>
+    <% end %>
         <br>
-        <p><%= @trip.description %></p>
+        <p id="mytrip-dscr"> <%= @trip.description %> </p>
         <br>
+
         <% if @trip.start_date.present? %>
-          <p><small><%= @trip.start_date %></small></p>
+          <p id="mytrip-date"><b>Start : </b>  <%= @trip.start_date %></p>
         <% end %>
-        <br>
-        <% if @trip.end_date.present? %>
-          <p><small><%= @trip.end_date %></small></p>
+
+          <% if @trip.end_date.present? %>
+          <p id="mytrip-date"><b>End : </b> <%= @trip.end_date %></p>
         <% end %>
-        <br>
+
     </div>
 
       <div class="show-card-trip-user">
@@ -88,13 +92,18 @@
 
 
   </div>
+
+<div class="show-comment">
   <div class="card-trip-comments"data-controller="insert-in-list">
-          <div data-insert-in-list-target="items" class="comments">
-            <% @trip.comments.each do |comment| %>
-              <%= render partial: 'comments/comment', locals: { comment: comment } %>
-            <% end %>
-          </div>
+    <div data-insert-in-list-target="items" class="comments">
+      <% @trip.comments.each do |comment| %>
+        <%= render partial: 'comments/comment', locals: { comment: comment } %>
+      <% end %>
+    </div>
   </div>
+</div>
+
+
 </div>
 <% if @activities.any? { |activity| activity.trip == @trip } %>
   <h2 class="title-show-trip">Related activities</h2>
