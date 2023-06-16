@@ -138,7 +138,7 @@
 
 
     <div class="card-trip-comments"data-controller="insert-in-list">
-      <div data-insert-in-list-target="items">
+      <div data-insert-in-list-target="items" class="comments">
         <% trip.comments.each do |comment| %>
           <%= render partial: 'comments/comment', locals: { comment: comment } %>
         <% end %>
