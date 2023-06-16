@@ -6,12 +6,14 @@ export default class extends Controller {
   connect() {
     // Code to run when the controller is connected
     console.log("Success");
-
+    // this.clicked = false
+    // console.log(this.clicked);
   }
 
   async like(event) {
     event.preventDefault();
 
+    this.clicked = false;
     const tripId = this.element.dataset.tripId;
     try {
       const response = await fetch(`/trips/${tripId}/like`,
@@ -24,9 +26,11 @@ export default class extends Controller {
           }
         }
       );
+
       if (response.ok) {
         const data = await response.json();
-        if (data.count.length > 0) {
+        console.log(data);
+        if (data.current_user && data.current_user.id && data.count.some(item => item.user_id === data.current_user.id)) {
           this.likeIconTarget.classList.remove("fa-regular");
           this.likeIconTarget.classList.add("fa-solid");
         } else {

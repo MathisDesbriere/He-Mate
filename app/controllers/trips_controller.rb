@@ -33,14 +33,14 @@ class TripsController < ApplicationController
       @trip.likes.find_by(user_id: current_user.id).destroy
       respond_to do |format|
         format.html { redirect_to trip_path(@trip), status: :see_other }
-        format.json { render json: { count: @trip.likes }}
+        format.json { render json: { count: @trip.likes, current_user: current_user }}
       end
     else
       @like = @trip.likes.build(user: current_user)
       respond_to do |format|
         if @like.save && @trip.save
           format.html { redirect_to trips_path(@trip) }
-          format.json { render json: { count: @trip.likes } }
+          format.json { render json: { count: @trip.likes, current_user: current_user } }
         else
           format.html { render "trips/index", status: :unprocessable_entity }
           format.json { render json: { error: "Failed to update like count",  }, status: :unprocessable_entity }
@@ -49,8 +49,6 @@ class TripsController < ApplicationController
     end
 
     skip_authorization
-
-
   end
 
   def user_trips
