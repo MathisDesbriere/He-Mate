@@ -2,7 +2,7 @@ class Trip < ApplicationRecord
   belongs_to :user
   has_many :activities, dependent: :destroy
   has_many :markers, dependent: :destroy
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   has_many_attached :images
   has_many :comments

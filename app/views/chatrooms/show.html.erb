@@ -3,7 +3,7 @@
   data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>"
   data-chatroom-subscription-current-user-id-value="<%= current_user.id %>">
 
-  <% if current_user.id == @chatroom.creator %>
+  <% if current_user == @chatroom.creator %>
   <div class="chatroom-header">
     <%= link_to user_trips_path(@chatroom.participant) do %>
       <%= image_tag @chatroom.participant.image.url, class: "chatroom-avatar" %>
