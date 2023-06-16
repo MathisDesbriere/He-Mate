@@ -94,5 +94,66 @@
               <%= render partial: 'comments/comment', locals: { comment: comment } %>
             <% end %>
           </div>
-        </div>
+  </div>
 </div>
+<% if @activities.any? { |activity| activity.trip == @trip } %>
+  <h2 class="title-show-trip">Related activities</h2>
+<% end %>
+
+<% @activities.each do |activity| %>
+  <section class="articles-show-trip">
+    <% if activity.trip == @trip %>
+      <article data-controller="pictures-activities">
+        <div class="article-body">
+          <div class="flex">
+            <%= link_to trip_path(@trip), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this activity?" } do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
+            <h4 class="activity-title"><b><%= activity.title %></b></h4>
+          </div>
+          <%= link_to activity.address, "http://maps.google.com/?q=#{activity.title}, #{activity.address}", target: "_blank" %>
+          <% if activity.first_picture.present? %>
+            <div class="display-pic">
+              <div data-action="click->pictures-activities#toggle">
+                <div data-pictures-activities-target="plus">
+                  <i class="fa-solid fa-plus fa-lg"></i>
+                </div>
+                <div data-pictures-activities-target="minus" class="d-none">
+                  <i class="fa-solid fa-minus fa-lg"></i>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="article-wrapper">
+          <div id="carousel-<%= activity.id %>" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="d-none" data-pictures-activities-target="pictures">
+                <% if activity.first_picture.present? %>
+                  <div class="carousel-item active">
+                    <%= image_tag activity.first_picture %>
+                  </div>
+                <% end %>
+                <% if activity.second_picture.present? %>
+                  <div class="carousel-item">
+                    <%= image_tag activity.second_picture %>
+                  </div>
+                <% end %>
+              </div>
+              <% if activity.first_picture.present? && activity.second_picture.present? %>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= activity.id %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= activity.id %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </article>
+    <% end %>
+  </section>
+<% end %>
