@@ -1,6 +1,6 @@
 <div class="show-card-trip" id="trips-index">
   <div class= "show-card-trip-title">
-    <p>User: <%= @trip.user.last_name %></p>
+    <p><%= @trip.user.first_name %></p>
   </div>
 
      <% if @trip.images.any? %>
@@ -42,21 +42,19 @@
     <div class="show-card-trip-details">
       <h2><%= @trip.title.capitalize %></h2>
         <% if @trip.marker %>
-          <p><%= @trip.marker.address %></p>
+          <sub><%= @trip.marker.address %></sub>
         <% end %>
         <br>
         <p><%= @trip.description %></p>
         <br>
         <% if @trip.start_date.present? %>
-          <p> <%= @trip.start_date %></p>
+          <p><small><%= @trip.start_date %></small></p>
         <% end %>
         <br>
         <% if @trip.end_date.present? %>
-          <p> <%= @trip.end_date %></p>
+          <p><small><%= @trip.end_date %></small></p>
         <% end %>
         <br>
-      <p><%= @trip.activities %></p>
-
     </div>
 
       <div class="show-card-trip-user">
@@ -98,6 +96,3 @@
           </div>
         </div>
 </div>
-
-
-
