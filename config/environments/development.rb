@@ -66,6 +66,7 @@ Rails.application.configure do
   # config.i18n.raise_on_missing_translations = true
 
 
+  config.hosts << /\A[a-z\d-]+\.loca\.lt\z/
 
 
   # Annotate rendered view with file names.
