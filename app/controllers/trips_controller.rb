@@ -68,6 +68,7 @@ class TripsController < ApplicationController
   def show
     @trip = Trip.find(params[:id])
     @comments = Comment.all
+    @activities = Activity.all
     authorize @trip
   end
 
