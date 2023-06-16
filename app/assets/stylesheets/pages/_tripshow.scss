@@ -67,7 +67,6 @@
 }
 
 .show-card-trip-details {
-  max-width: 160px;
   line-height: 1rem;
 }
 
@@ -76,4 +75,9 @@
   grid-template-columns: auto auto;
   padding: 10px;
   column-gap: 10px;
+}
+
+.show-comment {
+
+  padding-right: 20px;
 }
