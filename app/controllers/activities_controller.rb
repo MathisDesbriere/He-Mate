@@ -76,10 +76,19 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    if @activity.destroy
-      redirect_to activities_path, status: :see_other
+    if @acvtivity.trip != nil
+      if @activity.destroy
+        redirect_to activities_path, status: :see_other
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      trip = @activity.trip
+      if @activity.destroy
+        redirect_to trip_path(trip), status: :see_other
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
     authorize @activity
   end
