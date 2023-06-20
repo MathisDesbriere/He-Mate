@@ -76,7 +76,7 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    if @acvtivity.trip != nil
+    if @activity.trip.nil?
       if @activity.destroy
         redirect_to activities_path, status: :see_other
       else
